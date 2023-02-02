@@ -1,6 +1,6 @@
 import * as ex from 'excalibur';
 
-interface TilePosition {
+export interface TilePosition {
     x: number,
     y: number
 }
