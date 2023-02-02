@@ -32,7 +32,7 @@ export class Piece extends ex.Actor {
 
     onInitialize() {
         this.graphics.add(this.sprite);
-        this.on('pointerup', () => {
+        this.on('pointerdown', () => {
           console.log(this.pos);
         });
     }
