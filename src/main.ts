@@ -1,15 +1,19 @@
 import { Engine, Loader } from "excalibur";
+import { Board } from "./Models/Board/Board.model";
 import { Player } from "./player";
 import { Resources } from "./resources";
 
 class Game extends Engine {
     constructor() {
-      super({width: 800, height: 600});
+      super({width: 800, height: 800});
     }
     initialize() {
       
       const player = new Player();
       this.add(player);
+
+      const board = new Board();
+      this.add(board);
 
       const loader = new Loader([Resources.Sword]);
       this.start(loader);
