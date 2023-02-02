@@ -1,7 +1,8 @@
 import { ImageSource } from "excalibur";
+import whitePawn from "./images/white/pawn.png";
 
 let Resources = {
-  // Sword: new ImageSource(sword)
+  WhitePawn: new ImageSource(whitePawn)
 };
 
 export { Resources };

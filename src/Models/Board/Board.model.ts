@@ -2,6 +2,7 @@ import * as ex from 'excalibur';
 
 export class Board extends ex.Actor {
     tileColor = { green: new ex.Color(118, 150, 86, 1), beige: new ex.Color(238, 238, 210, 1)}
+    tiles: ex.Rectangle[][] = []
 
     constructor( public cols: number = 8, public rows: number = 8) {
         super({
@@ -13,13 +14,14 @@ export class Board extends ex.Actor {
 
         const width = 50, height = 50
         for (let i = 0; i < this.cols; i++) {
+            this.tiles.push([])
             for (let j = 0; j < this.rows; j++) {
                 const tile = new ex.Rectangle({
                     width: width,
                     height: height,
                     color: this.getColor(i,j),
                 })
-
+                this.tiles[i].push(tile)
                 this.graphics.show(tile, { 
                     anchor: ex.Vector.Zero,
                     offset: ex.vec(i * width, j * height)
@@ -57,5 +59,11 @@ export class Board extends ex.Actor {
         else {
             return false
         }
+    }
+
+    onInitialize(_engine: ex.Engine): void {
+        this.on('pointerup', function (ev) {
+            console.log(ev)
+        })
     }
   }
