@@ -11,7 +11,7 @@ class Game extends Engine {
       const board = new Board();
       this.add(board);
 
-      const loader = new Loader([Resources.Sword]);
+      const loader = new Loader();
       this.start(loader);
     }
   }
