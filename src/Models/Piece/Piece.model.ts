@@ -1,5 +1,6 @@
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
+import { TilePosition } from '../Board/Board.model';
 
 export interface PiecePosition {
     col: number,
@@ -16,18 +17,20 @@ export class Piece extends ex.Actor {
     currentPosition: PiecePosition
     white = true;
     sprite: ex.Sprite
+    availableTileColor = new ex.Color(255, 0, 0, 0.5)
+    grid
     
-    constructor(asset: ex.ImageSource, tilePosition: PiecePosition, pixelPosition: PixelPosition ) { 
+    constructor(asset: ex.ImageSource, position: PiecePosition, grid: TilePosition[][] ) { 
         super({
-            pos: ex.vec(pixelPosition.x + 50, pixelPosition.y + 50),
+            pos: ex.vec(grid[position.col][position.row].x + 50, grid[position.col][position.row].y + 50),
             width: 100,
             height: 100,
           });
-          this.draggable = true
           this.sprite = asset.toSprite()
           this.sprite.width = 100
           this.sprite.height = 100
-          this.currentPosition = tilePosition
+          this.currentPosition = position
+          this.grid = grid
     }
 
     onInitialize() {
