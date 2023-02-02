@@ -1,7 +1,7 @@
 {
-  "name": "EX Chess",
+  "name": "template-ts-vite",
   "version": "1.0.0",
-  "description": "Chess but with meter",
+  "description": "Excalibur TypeScript template for Vite",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
@@ -19,12 +19,12 @@
     "vite",
     "game-engine"
   ],
-  "author": "António Rocha",
+  "author": "Erik Onarheim",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/excaliburjs/template-ts-vite/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/excaliburjs/template-ts-vite#readme",
   "devDependencies": {
     "excalibur": "0.27.0",
     "typescript": "4.9.5",
