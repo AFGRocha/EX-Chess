@@ -1,6 +1,5 @@
 import { Engine, Loader } from "excalibur";
 import { Board } from "./Models/Board/Board.model";
-import { Player } from "./player";
 import { Resources } from "./resources";
 
 class Game extends Engine {
@@ -9,9 +8,6 @@ class Game extends Engine {
     }
     initialize() {
       
-      const player = new Player();
-      this.add(player);
-
       const board = new Board();
       this.add(board);
 
