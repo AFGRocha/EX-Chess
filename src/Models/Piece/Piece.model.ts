@@ -53,4 +53,13 @@ export class Piece extends ex.Actor {
         this.chess!.remove(piecesInPlay[index])
         piecesInPlay.splice(index, 1);
     }
+
+    cancel(piece: Piece) {
+        this.chess!.board.on('pointerdown', () => {
+            for (var moves in piece.availableTiles) {
+                this.removeChild(piece.availableTiles[moves])
+            }
+            this.chess!.board.off("pointerdown");
+        });
+    }
 }

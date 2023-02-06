@@ -14,6 +14,8 @@ export class Board extends ex.Actor {
             name: 'Board',
             pos: new ex.Vector(0, 0),
             anchor: ex.Vector.Zero,
+            width: 800,
+            height: 800
         });
 
         const width = 100, height = 100

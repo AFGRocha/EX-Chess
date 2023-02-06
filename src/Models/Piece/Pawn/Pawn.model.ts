@@ -3,14 +3,16 @@ import { ImageSource, Vector } from 'excalibur';
 import { Chess } from '../../../Scenes/chess';
 import { piecesInPlay } from '../../../State/Grid.state';
 import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
-import { TilePosition } from '../../Board/Board.model';
+import { Board, TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition, PixelPosition } from '../Piece.model';
 
 
 export class Pawn extends Piece {
     firstMove = true  
+    chess: Chess | null = null
     constructor(asset: ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], chess: Chess ) { 
         super(asset,tilePosition,grid, chess);
+        this.chess = chess
     }
 
     onInitialize() {
@@ -30,7 +32,7 @@ export class Pawn extends Piece {
             this.addChild(firstAvailableMove)
             this.availableTiles.push(firstAvailableMove)
         }
-
+        
         const movePosition = new ex.Vector(0,- 100)
         const availableMove = new AvailableMove(movePosition, this.availableTileColor)
         availableMove.on('pointerdown', () => {
@@ -54,6 +56,7 @@ export class Pawn extends Piece {
             this.addChild(killMove)
             this.availableTiles.push(killMove)
         }
+        this.cancel(this)
     }
 
     move(x: number, y: number) {
