@@ -1,5 +1,6 @@
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
+import { AvailableMove } from '../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../Board/Board.model';
 
 export interface PiecePosition {
@@ -18,6 +19,7 @@ export class Piece extends ex.Actor {
     white = true;
     sprite: ex.Sprite
     availableTileColor = new ex.Color(255, 0, 0, 0.5)
+    availableTiles: AvailableMove[] = []
     grid
     
     constructor(asset: ex.ImageSource, position: PiecePosition, grid: TilePosition[][] ) { 

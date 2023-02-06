@@ -1,17 +1,13 @@
 import * as ex from 'excalibur';
 import { ImageSource, Vector } from 'excalibur';
 import { chess } from '../../../main';
+import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition, PixelPosition } from '../Piece.model';
 
 
 export class Pawn extends Piece {
-    availableMove = new ex.Actor({
-        width: 100,
-        height: 100,
-        pos: new ex.Vector(0, 0),
-        color: this.availableTileColor
-    });  
+    firstMove = true  
     constructor(asset: ImageSource, tilePosition: PiecePosition, grid: TilePosition[][] ) { 
         super(asset,tilePosition,grid);
     }
@@ -24,19 +20,37 @@ export class Pawn extends Piece {
     }
 
     select() {
-        this.availableMove.pos = new ex.Vector(0,- 200)
-        this.availableMove.on('pointerdown', () => {
-            this.move()
+        if(this.firstMove) {
+            const firstMovePosition = new ex.Vector(0,- 200)
+            const firstAvailableMove = new AvailableMove(firstMovePosition, this.availableTileColor)
+            firstAvailableMove.on('pointerdown', () => {
+                this.move(0,2)
+            });
+            this.addChild(firstAvailableMove)
+            this.availableTiles.push(firstAvailableMove)
+        }
+
+        const movePosition = new ex.Vector(0,- 100)
+        const availableMove = new AvailableMove(movePosition, this.availableTileColor)
+        availableMove.on('pointerdown', () => {
+            this.move(0,1)
         });
-        // this.availableMove.pos = new ex.Vector(this.grid[this.currentPosition.col][this.currentPosition.row - 2].x, this.grid[this.currentPosition.col][this.currentPosition.row - 2].y)
-        this.addChild(this.availableMove)
+        this.addChild(availableMove)
+        this.availableTiles.push(availableMove)
+
     }
 
-    move() {
+    move(x: number, y: number) {
         console.log(this.pos, this.currentPosition)
-        this.currentPosition = {col:  this.currentPosition.col, row: this.currentPosition.row - 2}
-        this.pos =new ex.Vector(this.grid[this.currentPosition.col][this.currentPosition.row].x + 50, this.grid[this.currentPosition.col][this.currentPosition.row].y + 50)
-        this.removeChild(this.availableMove)
+        this.currentPosition = {col:  this.currentPosition.col - x, row: this.currentPosition.row - y}
+        this.pos = new ex.Vector(this.grid[this.currentPosition.col][this.currentPosition.row].x + 50, this.grid[this.currentPosition.col][this.currentPosition.row].y + 50)
+        for (var moves in this.availableTiles) {
+            this.removeChild(this.availableTiles[moves])
+        }
+        if (this.firstMove){
+            this.firstMove = false;
+        }
+        
         console.log(this.pos, this.currentPosition)
     }
 }
