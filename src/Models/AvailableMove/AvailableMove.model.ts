@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { PiecePosition } from '../Piece/Piece.model';
 
 export class AvailableMove extends ex.Actor {
     constructor(position: ex.Vector, availableTileColor: ex.Color) { 

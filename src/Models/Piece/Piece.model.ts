@@ -24,6 +24,7 @@ export class Piece extends ex.Actor {
     availableTileColor = new ex.Color(255, 0, 0, 0.5)
     availableTiles: AvailableMove[] = []
     chess: Chess | null = null
+    isSelected: boolean = false
     grid
     
     constructor(asset: ex.ImageSource, position: PiecePosition, grid: TilePosition[][], chess: Chess ) { 
@@ -47,11 +48,32 @@ export class Piece extends ex.Actor {
         });
     }
 
-    killPiece(killedPiece: any) {
+    killPiece(killedPiece: Piece) {
         console.log(killedPiece)
         const index = piecesInPlay.indexOf(killedPiece)
         this.chess!.remove(piecesInPlay[index])
         piecesInPlay.splice(index, 1);
+    }
+
+    cleanAvailableTiles () {
+        for (var moves in this.availableTiles) {
+            this.removeChild(this.availableTiles[moves])
+        }
+    }
+
+    select(){
+
+    }
+
+    move(x: number, y: number){
+        console.log(this.pos, this.currentPosition)
+        this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
+        this.currentPosition = {col: x, row: y}
+        for (var moves in this.availableTiles) {
+            this.removeChild(this.availableTiles[moves])
+        }
+
+        console.log(this.pos, this.currentPosition)
     }
 
     cancel(piece: Piece) {
