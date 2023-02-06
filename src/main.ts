@@ -8,7 +8,7 @@ class Game extends ex.Engine {
     }
     initialize() {
 
-      const loader = new ex.Loader([Resources.WhitePawn]);
+      const loader = new ex.Loader([Resources.WhitePawn, Resources.BlackPawn]);
       this.start(loader);
       
     }

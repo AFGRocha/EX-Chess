@@ -1,6 +1,7 @@
 import * as ex from 'excalibur';
 import { ImageSource, Vector } from 'excalibur';
-import { chess } from '../../../main';
+import { Chess } from '../../../Scenes/chess';
+import { piecesInPlay } from '../../../State/Grid.state';
 import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition, PixelPosition } from '../Piece.model';
@@ -8,8 +9,8 @@ import { Piece, PiecePosition, PixelPosition } from '../Piece.model';
 
 export class Pawn extends Piece {
     firstMove = true  
-    constructor(asset: ImageSource, tilePosition: PiecePosition, grid: TilePosition[][] ) { 
-        super(asset,tilePosition,grid);
+    constructor(asset: ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], chess: Chess ) { 
+        super(asset,tilePosition,grid, chess);
     }
 
     onInitialize() {
@@ -38,6 +39,21 @@ export class Pawn extends Piece {
         this.addChild(availableMove)
         this.availableTiles.push(availableMove)
 
+        const killablePiece1 = piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + 1, row: this.currentPosition.row - 1}))
+        const killablePiece2 = piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col - 1, row: this.currentPosition.row - 1}))
+        
+        console.log(piecesInPlay)
+        if(killablePiece1) {
+            console.log('entrou')
+            const killMovePosition = new ex.Vector(100, -100)
+            const killMove = new AvailableMove(killMovePosition, this.availableTileColor)
+            killMove.on('pointerdown', () => {
+                this.move(-1,1)
+                this.killPiece(killablePiece1)
+            });
+            this.addChild(killMove)
+            this.availableTiles.push(killMove)
+        }
     }
 
     move(x: number, y: number) {
