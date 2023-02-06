@@ -12,8 +12,6 @@ export class Chess extends ex.Scene {
     }
     onInitialize(_game: ex.Engine) { 
         this.add(this.board);
-        console.log(this.board.tiles)
-  
     
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, this))
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 1, row: 6 }, this.board.tiles, this))

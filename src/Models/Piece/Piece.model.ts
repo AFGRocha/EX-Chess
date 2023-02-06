@@ -66,14 +66,11 @@ export class Piece extends ex.Actor {
     }
 
     move(x: number, y: number){
-        console.log(this.pos, this.currentPosition)
         this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
         this.currentPosition = {col: x, row: y}
         for (var moves in this.availableTiles) {
             this.removeChild(this.availableTiles[moves])
         }
-
-        console.log(this.pos, this.currentPosition)
     }
 
     cancel(piece: Piece) {
