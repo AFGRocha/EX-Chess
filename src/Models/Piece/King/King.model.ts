@@ -1,10 +1,13 @@
 import * as ex from 'excalibur';
+import { smallDistanceMixin } from '../../../Mixins/SmallMovementPiece.mixin';
 import { Chess } from '../../../Scenes/chess';
 import { piecesInPlay } from '../../../State/Grid.state';
 import { TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition } from '../Piece.model';
 
-export class King extends Piece {
+const smallDistancePiece = smallDistanceMixin(Piece)
+
+export class King extends smallDistancePiece {
     
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
         super(asset,tilePosition,grid, pieceColor, `${pieceColor}King${tilePosition.col}`, chess);
@@ -26,28 +29,7 @@ export class King extends Piece {
             {x: 1, y: 1} // DownRight
         ]
 
-        for(let j = 0; j < directionModifier.length; j++) {
-            const colPosition = this.currentPosition.col + (1 * directionModifier[j].x)
-            const rowPosition = this.currentPosition.row + (1 * directionModifier[j].y)
-            const moveVectorX = (1 * directionModifier[j].x) * 100
-            const moveVectorY = (1 * directionModifier[j].y) * 100
-            const blockingPiece = piecesInPlay.find(piece => 
-                JSON.stringify(piece.currentPosition) === 
-                JSON.stringify({col: colPosition, row: rowPosition}))
-            
-            if(blockingPiece) {
-                console.log(blockingPiece)
-                if(blockingPiece.pieceColor != this.pieceColor) {
-                    this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition, blockingPiece)
-                } else {
-                    continue
-                }
-            } 
-            
-            if(this.grid[colPosition])
-                if(this.grid[colPosition][rowPosition])
-                    this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition)
-        }
+        this.smallDistanceMove(directionModifier, piecesInPlay)
         
         super.select()
     }
