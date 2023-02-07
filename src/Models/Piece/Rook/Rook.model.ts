@@ -18,66 +18,36 @@ export class Rook extends Piece {
     }
 
     select() {
-        // Up
-        for(let i = 1; i < 8; i++) {
-            const blockingPiece = piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col, row: this.currentPosition.row - i}))
-            if(blockingPiece) {
-                if(blockingPiece.pieceColor === this.pieceColor)
-                    break
-                else {
-                    this.drawMove(0, i * -100, this.currentPosition.col, this.currentPosition.row - i, blockingPiece)
-                    break
-                }
+        const directionModifier = [
+            {x: 0, y: -1}, // Up
+            {x: 0, y: 1}, // Down
+            {x: 1, y: 0}, // Right
+            {x: -1, y: 0} // Left
+        ]
+        for(let j = 0; j < directionModifier.length; j++) {
+            for(let i = 1; i < 8; i++) {
+                const colPosition = this.currentPosition.col + (i * directionModifier[j].x)
+                const rowPosition = this.currentPosition.row + (i * directionModifier[j].y)
+                const moveVectorX = (i * directionModifier[j].x) * 100
+                const moveVectorY = (i * directionModifier[j].y) * 100
+                const blockingPiece = piecesInPlay.find(piece => 
+                    JSON.stringify(piece.currentPosition) === 
+                    JSON.stringify({col: colPosition, row: rowPosition}))
+                
+                if(blockingPiece) {
+                    if(blockingPiece.pieceColor === this.pieceColor)
+                        break
+                    else {
+                        this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition, blockingPiece)
+                        break
+                    }
+                } 
+                
+                if(this.grid[colPosition])
+                    if(this.grid[colPosition][rowPosition])
+                        this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition)
             } 
-            
-            if(this.grid[this.currentPosition.col][this.currentPosition.row - i])
-                this.drawMove(0, i * -100, this.currentPosition.col, this.currentPosition.row - i)
-        } 
-        
-        // Down
-        for(let i = 1; i < 8; i++) {
-            const blockingPiece = piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col, row: this.currentPosition.row + i}))
-            if(blockingPiece) {
-                if(blockingPiece.pieceColor === this.pieceColor)
-                    break
-                else {
-                    this.drawMove(0, i * 100, this.currentPosition.col, this.currentPosition.row + i, blockingPiece)
-                    break
-                }
-            } 
-            if(this.grid[this.currentPosition.col][this.currentPosition.row + i])
-            this.drawMove(0, i * 100, this.currentPosition.col, this.currentPosition.row + i)
-        } 
-
-        // Right
-        for(let i = 1; i < 8; i++) {
-            const blockingPiece = piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + i, row: this.currentPosition.row}))
-            if(blockingPiece) {
-                if(blockingPiece.pieceColor === this.pieceColor)
-                    break
-                else {
-                    this.drawMove(i * 100, 0, this.currentPosition.col + i, this.currentPosition.row, blockingPiece)
-                    break
-                }
-            } 
-            if(this.grid[this.currentPosition.col + 1])
-            this.drawMove(i * 100, 0, this.currentPosition.col + i, this.currentPosition.row)
-        } 
-
-        // Left
-        for(let i = 1; i < 8; i++) {
-            const blockingPiece = piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col - i, row: this.currentPosition.row}))
-            if(blockingPiece) {
-                if(blockingPiece.pieceColor === this.pieceColor)
-                    break
-                else {
-                    this.drawMove(i * -100, 0, this.currentPosition.col - i, this.currentPosition.row, blockingPiece)
-                    break
-                }
-            } 
-            if(this.grid[this.currentPosition.col - 1])
-            this.drawMove(i * -100, 0, this.currentPosition.col - i, this.currentPosition.row)
-        } 
+        }
         super.select()
     }
 }
