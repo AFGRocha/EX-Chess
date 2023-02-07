@@ -4,24 +4,21 @@ import { piecesInPlay } from '../../../State/Grid.state';
 import { TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition } from '../Piece.model';
 
-export class Rook extends Piece {
-    
+export class Bishop extends Piece {
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
-        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Rook${tilePosition.col}`, chess);
+        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Bishop${tilePosition.col}`, chess);
     }
 
     onInitialize() {
         super.onInitialize()
-
-
     }
 
     select() {
         const directionModifier = [
-            {x: 0, y: -1}, // Up
-            {x: 0, y: 1}, // Down
-            {x: 1, y: 0}, // Right
-            {x: -1, y: 0} // Left
+            {x: -1, y: -1}, // UpLeft
+            {x: -1, y: 1}, // DownLeft
+            {x: 1, y: -1}, // UpRight
+            {x: 1, y: 1} // DownRight
         ]
         for(let j = 0; j < directionModifier.length; j++) {
             for(let i = 1; i < 8; i++) {
