@@ -25,13 +25,15 @@ export class Piece extends ex.Actor {
     availableTiles: AvailableMove[] = []
     chess: Chess | null = null
     isSelected: boolean = false
+    pieceColor: string = ''
     grid
     
-    constructor(asset: ex.ImageSource, position: PiecePosition, grid: TilePosition[][], chess: Chess ) { 
+    constructor(asset: ex.ImageSource, position: PiecePosition, grid: TilePosition[][], pieceColor: string, name: string, chess: Chess ) { 
         super({
             pos: ex.vec(grid[position.col][position.row].x + 50, grid[position.col][position.row].y + 50),
             width: 100,
             height: 100,
+            name: name
           });
           this.sprite = asset.toSprite()
           this.sprite.width = 100
@@ -39,6 +41,7 @@ export class Piece extends ex.Actor {
           this.currentPosition = position
           this.grid = grid
           this.chess = chess
+          this.pieceColor = pieceColor
     }
 
     onInitialize() {
@@ -49,10 +52,12 @@ export class Piece extends ex.Actor {
     }
 
     killPiece(killedPiece: Piece) {
-        console.log(killedPiece)
-        const index = piecesInPlay.indexOf(killedPiece)
-        this.chess!.remove(piecesInPlay[index])
-        piecesInPlay.splice(index, 1);
+        if(killedPiece.pieceColor != this.pieceColor) {
+            console.log(killedPiece)
+            const index = piecesInPlay.indexOf(killedPiece)
+            this.chess!.remove(piecesInPlay[index])
+            piecesInPlay.splice(index, 1);
+        }
     }
 
     cleanAvailableTiles () {

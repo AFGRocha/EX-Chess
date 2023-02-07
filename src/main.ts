@@ -1,10 +1,17 @@
 import * as ex from 'excalibur';
+import { DisplayMode } from 'excalibur';
 import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
 
 class Game extends ex.Engine {
     constructor() {
-      super({width: 800, height: 800});
+      super({
+        // set the viewport dimensions
+        viewport: { width: 800, height: 900 },
+      
+        // sets the resolution
+        resolution: { width: 800, height: 900 }
+      });
     }
     initialize() {
 

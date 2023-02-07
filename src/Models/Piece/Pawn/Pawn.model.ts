@@ -13,8 +13,8 @@ export class Pawn extends Piece {
     killablePieces: Piece[] = []
     enPassantPieces: Piece[] = []
 
-    constructor(asset: ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], chess: Chess ) { 
-        super(asset,tilePosition,grid, chess);
+    constructor(asset: ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
+        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Pawn${tilePosition.col}`, chess);
         this.chess = chess
     }
 
@@ -30,7 +30,10 @@ export class Pawn extends Piece {
         if(this.firstMove) {    
             this.drawMove(0, -200, this.currentPosition.col, this.currentPosition.row - 2)
         }
-        this.drawMove(0, -100, this.currentPosition.col, this.currentPosition.row - 1)
+        if(!piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col, row: this.currentPosition.row - 1}))) {
+            this.drawMove(0, -100, this.currentPosition.col, this.currentPosition.row - 1)
+        }
+        // this.drawMove(0, -100, this.currentPosition.col, this.currentPosition.row - 1)
 
         this.getDiagonalPiecesAndDrawMove()
         this.enPassant()
