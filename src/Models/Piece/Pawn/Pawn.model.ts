@@ -1,29 +1,22 @@
 import * as ex from 'excalibur';
-import { ImageSource, Vector } from 'excalibur';
 import { Chess } from '../../../Scenes/chess';
 import { piecesInPlay } from '../../../State/Grid.state';
 import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
-import { Board, TilePosition } from '../../Board/Board.model';
-import { Piece, PiecePosition, PixelPosition } from '../Piece.model';
+import { TilePosition } from '../../Board/Board.model';
+import { Piece, PiecePosition } from '../Piece.model';
 
 
 export class Pawn extends Piece {
     firstMove = true  
-    chess: Chess | null = null
     killablePieces: Piece[] = []
     enPassantPieces: Piece[] = []
 
-    constructor(asset: ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
+    constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
         super(asset,tilePosition,grid, pieceColor, `${pieceColor}Pawn${tilePosition.col}`, chess);
-        this.chess = chess
     }
 
     onInitialize() {
-        this.graphics.add(this.sprite);
-        this.on('pointerdown', () => {
-            this.cleanAvailableTiles
-            this.select()
-        });
+        super.onInitialize()
     }
 
     select() {
@@ -70,11 +63,12 @@ export class Pawn extends Piece {
 
         for (var moves in this.killablePieces) { 
             if(this.killablePieces[moves]) {
-                const killablePiece = this.killablePieces[moves]
-                console.log(killablePiece.currentPosition)
-                const drawX = killablePiece.currentPosition.col -this.currentPosition.col 
-                const drawY = killablePiece.currentPosition.row - this.currentPosition.row 
-                this.drawMove(drawX * 100,  drawY * 100, killablePiece.currentPosition.col, killablePiece.currentPosition.row, killablePiece)
+                if(this.killablePieces[moves].pieceColor != this.pieceColor) {
+                    const killablePiece = this.killablePieces[moves]
+                    const drawX = killablePiece.currentPosition.col -this.currentPosition.col 
+                    const drawY = killablePiece.currentPosition.row - this.currentPosition.row 
+                    this.drawMove(drawX * 100,  drawY * 100, killablePiece.currentPosition.col, killablePiece.currentPosition.row, killablePiece)
+                }
             }
         }
         this.killablePieces = []
@@ -84,12 +78,13 @@ export class Pawn extends Piece {
         this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + 1, row: this.currentPosition.row}))!)
         this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col - 1, row: this.currentPosition.row}))!)
         for (var moves in this.enPassantPieces) { 
-            console.log(this.enPassantPieces[moves])
             if(this.enPassantPieces[moves]) {
-                const killablePiece = this.enPassantPieces[moves]
-                const drawX = killablePiece.currentPosition.col - this.currentPosition.col 
+                if(this.enPassantPieces[moves].pieceColor != this.pieceColor) {
+                    const killablePiece = this.enPassantPieces[moves]
+                    const drawX = killablePiece.currentPosition.col - this.currentPosition.col 
 
-                this.drawMove(drawX * 100, -100, killablePiece.currentPosition.col, killablePiece.currentPosition.row - 1, killablePiece)
+                    this.drawMove(drawX * 100, -100, killablePiece.currentPosition.col, killablePiece.currentPosition.row - 1, killablePiece)
+                }    
             }
         }
         this.enPassantPieces = []

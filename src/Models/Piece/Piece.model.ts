@@ -47,13 +47,13 @@ export class Piece extends ex.Actor {
     onInitialize() {
         this.graphics.add(this.sprite);
         this.on('pointerdown', () => {
-          console.log(this.pos);
+            this.cleanAvailableTiles
+            this.select()
         });
     }
 
     killPiece(killedPiece: Piece) {
         if(killedPiece.pieceColor != this.pieceColor) {
-            console.log(killedPiece)
             const index = piecesInPlay.indexOf(killedPiece)
             this.chess!.remove(piecesInPlay[index])
             piecesInPlay.splice(index, 1);
