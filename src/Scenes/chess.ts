@@ -2,6 +2,7 @@ import * as ex from 'excalibur';
 import { Board } from '../Models/Board/Board.model';
 import { Bishop } from '../Models/Piece/Bishop/Bishop.model';
 import { Pawn } from '../Models/Piece/Pawn/Pawn.model';
+import { Queen } from '../Models/Piece/Queen/Queen.model';
 import { Rook } from '../Models/Piece/Rook/Rook.model';
 import { Resources } from '../resources';
 import { piecesInPlay } from '../State/Grid.state';
@@ -22,6 +23,7 @@ export class Chess extends ex.Scene {
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 2, row: 6 }, this.board.tiles, 'White', this))
         
         piecesInPlay.push(new Bishop(Resources.WhiteBishop, {col: 2, row: 7 }, this.board.tiles, 'White', this))
+        piecesInPlay.push(new Queen(Resources.WhiteQueen, {col: 3, row: 7 }, this.board.tiles, 'White', this))
 
 
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 3, row: 6 }, this.board.tiles, 'White', this))
