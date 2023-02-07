@@ -9,7 +9,7 @@ const LongDistancePiece = longDistanceMixin(Piece)
 export class Queen extends LongDistancePiece {
     
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
-        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Rook${tilePosition.col}`, chess);
+        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Queen${tilePosition.col}`, chess);
     }
 
     onInitialize() {
