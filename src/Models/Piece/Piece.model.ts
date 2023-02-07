@@ -67,7 +67,7 @@ export class Piece extends ex.Actor {
     }
 
     select(){
-
+        this.cancel(this)
     }
 
     move(x: number, y: number){
@@ -85,5 +85,19 @@ export class Piece extends ex.Actor {
             }
             this.chess!.board.off("pointerdown");
         });
+    }
+
+    drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece | null = null) {
+        const movePosition = new ex.Vector(vectorX, vectorY)
+        const availableMove = new AvailableMove(movePosition, this.availableTileColor)
+        
+        availableMove.on('pointerdown', () => {
+            this.move(moveX,moveY)
+            if(killablePiece) {
+                this.killPiece(killablePiece)
+            }
+        });
+        this.addChild(availableMove)
+        this.availableTiles.push(availableMove)
     }
 }

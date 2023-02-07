@@ -31,7 +31,7 @@ export class Pawn extends Piece {
         this.getDiagonalPiecesAndDrawMove()
         this.enPassant()
 
-        this.cancel(this)
+        super.select()
     }
 
     move(x: number, y: number) {
@@ -42,19 +42,6 @@ export class Pawn extends Piece {
         }
     }
 
-    drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece | null = null) {
-        const movePosition = new ex.Vector(vectorX, vectorY)
-        const availableMove = new AvailableMove(movePosition, this.availableTileColor)
-        
-        availableMove.on('pointerdown', () => {
-            this.move(moveX,moveY)
-            if(killablePiece) {
-                this.killPiece(killablePiece)
-            }
-        });
-        this.addChild(availableMove)
-        this.availableTiles.push(availableMove)
-    }
 
     getDiagonalPiecesAndDrawMove() {
         this.killablePieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + 1, row: this.currentPosition.row - 1}))!)

@@ -1,6 +1,7 @@
 import * as ex from 'excalibur';
 import { Board } from '../Models/Board/Board.model';
 import { Pawn } from '../Models/Piece/Pawn/Pawn.model';
+import { Rook } from '../Models/Piece/Rook/Rook.model';
 import { Resources } from '../resources';
 import { piecesInPlay } from '../State/Grid.state';
 
@@ -13,7 +14,8 @@ export class Chess extends ex.Scene {
     onInitialize(_game: ex.Engine) { 
         this.add(this.board);
     
-        piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this))
+        // piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this))
+        piecesInPlay.push(new Rook(Resources.WhiteRook, {col: 0, row: 7 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 1, row: 6 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 2, row: 6 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 3, row: 6 }, this.board.tiles, 'White', this))
