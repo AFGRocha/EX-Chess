@@ -22,6 +22,8 @@ export class Chess extends ex.Scene {
         this.add(new EX(new ex.Vector(0, 800)))
         console.log(piecesInPlay)
         piecesInPlay[0][6] = new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this)
+        piecesInPlay[0][7] = new Rook(Resources.WhiteRook, {col: 0, row: 7 }, this.board.tiles, 'White', this)
+        piecesInPlay[2][7] = new Bishop(Resources.WhiteBishop, {col: 2, row: 7 }, this.board.tiles, 'White', this)
         /*piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Rook(Resources.WhiteRook, {col: 0, row: 7 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Knight(Resources.WhiteKnight, {col: 1, row: 7 }, this.board.tiles, 'White', this))

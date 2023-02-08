@@ -4,17 +4,20 @@ export type Class = new (...args: any[]) => any;
 
 export function longDistanceMixin<Base extends Class>(base: Base) {
     return class extends base {
-        longDistanceMove(directionModifierArray: any[], piecesInPlay: Piece[]) {
+        longDistanceMove(directionModifierArray: any[], piecesInPlay: any[][]) {
             const directionModifier = directionModifierArray
             for(let j = 0; j < directionModifier.length; j++) {
                 for(let i = 1; i < 8; i++) {
                     const colPosition = this.currentPosition.col + (i * directionModifier[j].x)
                     const rowPosition = this.currentPosition.row + (i * directionModifier[j].y)
+                    if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
+                        console.log(colPosition, rowPosition)
+                        break
+                    }
+
                     const moveVectorX = (i * directionModifier[j].x) * 100
                     const moveVectorY = (i * directionModifier[j].y) * 100
-                    const blockingPiece = piecesInPlay.find(piece => 
-                        JSON.stringify(piece.currentPosition) === 
-                        JSON.stringify({col: colPosition, row: rowPosition}))
+                    const blockingPiece = piecesInPlay[colPosition][rowPosition]
                     
                     if(blockingPiece) {
                         if(blockingPiece.pieceColor === this.pieceColor)
