@@ -1,5 +1,6 @@
 import * as ex from 'excalibur';
 import { Board } from '../Models/Board/Board.model';
+import { EX } from '../Models/EX/EX.model';
 import { Bishop } from '../Models/Piece/Bishop/Bishop.model';
 import { King } from '../Models/Piece/King/King.model';
 import { Knight } from '../Models/Piece/Knight/Knight.model';
@@ -17,6 +18,8 @@ export class Chess extends ex.Scene {
     }
     onInitialize(_game: ex.Engine) { 
         this.add(this.board);
+
+        this.add(new EX(new ex.Vector(0, 800)))
     
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Rook(Resources.WhiteRook, {col: 0, row: 7 }, this.board.tiles, 'White', this))
