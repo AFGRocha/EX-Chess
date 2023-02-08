@@ -77,7 +77,6 @@ export class Piece extends ex.Actor {
         for (var moves in this.availableTiles) {
             this.removeChild(this.availableTiles[moves])
         }
-        console.log(piecesInPlay)
     }
 
     cancel(piece: Piece) {

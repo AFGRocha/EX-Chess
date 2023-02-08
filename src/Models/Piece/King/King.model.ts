@@ -47,10 +47,7 @@ export class King extends smallDistancePiece {
             if(x === 5) { 
                 // is there a piece in f1?
                 const possibleBlockingPiece = piecesInPlay[6][7]
-
-                console.log(possibleBlockingPiece)
                 if(!possibleBlockingPiece) {
-                    console.log('not blocked') 
                     const possibleRook = piecesInPlay[7][7]
                     if (possibleRook instanceof Rook){
                         this.move(6,7)
