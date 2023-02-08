@@ -16,7 +16,6 @@ export function smallDistanceMixin<Base extends Class>(base: Base) {
                     JSON.stringify({col: colPosition, row: rowPosition}))
                 
                 if(blockingPiece) {
-                    console.log(blockingPiece)
                     if(blockingPiece.pieceColor != this.pieceColor) {
                         this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition, blockingPiece)
                     } else {

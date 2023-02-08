@@ -29,6 +29,8 @@ export class Chess extends ex.Scene {
         piecesInPlay.push(new Queen(Resources.WhiteQueen, {col: 3, row: 7 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new King(Resources.WhiteKing, {col: 4, row: 7 }, this.board.tiles, 'White', this))
 
+        piecesInPlay.push(new Rook(Resources.WhiteRook, {col: 7, row: 7 }, this.board.tiles, 'White', this))
+
 
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 3, row: 6 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 4, row: 6 }, this.board.tiles, 'White', this))
