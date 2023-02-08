@@ -54,9 +54,8 @@ export class Piece extends ex.Actor {
 
     killPiece(killedPiece: Piece) {
         if(killedPiece.pieceColor != this.pieceColor) {
-            const index = piecesInPlay.indexOf(killedPiece)
-            this.chess!.remove(piecesInPlay[index])
-            piecesInPlay.splice(index, 1);
+            this.chess!.remove(piecesInPlay[killedPiece.currentPosition.col][killedPiece.currentPosition.row])
+            piecesInPlay[killedPiece.currentPosition.col][killedPiece.currentPosition.row] = null
         }
     }
 
@@ -71,11 +70,14 @@ export class Piece extends ex.Actor {
     }
 
     move(x: number, y: number){
+        piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
+        piecesInPlay[x][y] = this
         this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
         this.currentPosition = {col: x, row: y}
         for (var moves in this.availableTiles) {
             this.removeChild(this.availableTiles[moves])
         }
+        console.log(piecesInPlay)
     }
 
     cancel(piece: Piece) {
@@ -92,10 +94,10 @@ export class Piece extends ex.Actor {
         const availableMove = new AvailableMove(movePosition, this.availableTileColor)
         
         availableMove.on('pointerdown', () => {
-            this.move(moveX,moveY)
             if(killablePiece) {
                 this.killPiece(killablePiece)
             }
+            this.move(moveX,moveY)
         });
         this.addChild(availableMove)
         this.availableTiles.push(availableMove)

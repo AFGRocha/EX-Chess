@@ -20,8 +20,9 @@ export class Chess extends ex.Scene {
         this.add(this.board);
 
         this.add(new EX(new ex.Vector(0, 800)))
-    
-        piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this))
+        console.log(piecesInPlay)
+        piecesInPlay[0][6] = new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this)
+        /*piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Rook(Resources.WhiteRook, {col: 0, row: 7 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Knight(Resources.WhiteKnight, {col: 1, row: 7 }, this.board.tiles, 'White', this))
 
@@ -41,12 +42,16 @@ export class Chess extends ex.Scene {
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 6, row: 6 }, this.board.tiles, 'White', this))
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 7, row: 6 }, this.board.tiles, 'White', this))
         
-        piecesInPlay.push(new Pawn(Resources.BlackPawn, {col: 5, row: 3 }, this.board.tiles, 'Black', this))
-        piecesInPlay.push(new Pawn(Resources.BlackPawn, {col: 5, row: 2 }, this.board.tiles, 'Black', this))
+        piecesInPlay.push(new Pawn(Resources.BlackPawn, {col: 5, row: 2 }, this.board.tiles, 'Black', this)) */
+        piecesInPlay[1][4] = new Pawn(Resources.BlackPawn, {col: 1, row: 4 }, this.board.tiles, 'Black', this)
+        piecesInPlay[1][3] = new Pawn(Resources.BlackPawn, {col: 1, row: 3 }, this.board.tiles, 'Black', this)
 
 
-        for (var piece in piecesInPlay) {
-          this.add(piecesInPlay[piece])
+        for (var pieces in piecesInPlay) {
+            for(var piece in piecesInPlay[pieces]) {
+                if(piecesInPlay[pieces][piece])
+                    this.add(piecesInPlay[pieces][piece])
+            }
         }
     }
 }

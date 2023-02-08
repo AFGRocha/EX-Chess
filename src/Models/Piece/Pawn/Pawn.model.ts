@@ -11,7 +11,6 @@ export class Pawn extends Piece {
     firstMove = true  
     killablePieces: Piece[] = []
     enPassantPieces: Piece[] = []
-    canEnPassant: boolean = false;
 
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
         super(asset,tilePosition,grid, pieceColor, `${pieceColor}Pawn${tilePosition.col}`, chess);
@@ -25,7 +24,8 @@ export class Pawn extends Piece {
         if(this.firstMove) {    
             this.drawMove(0, -200, this.currentPosition.col, this.currentPosition.row - 2)
         }
-        if(!piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col, row: this.currentPosition.row - 1}))) {
+        
+        if(!piecesInPlay[this.currentPosition.col][this.currentPosition.row - 1]) {
             this.drawMove(0, -100, this.currentPosition.col, this.currentPosition.row - 1)
         }
         // this.drawMove(0, -100, this.currentPosition.col, this.currentPosition.row - 1)
@@ -50,8 +50,10 @@ export class Pawn extends Piece {
 
 
     getDiagonalPiecesAndDrawMove() {
-        this.killablePieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + 1, row: this.currentPosition.row - 1}))!)
-        this.killablePieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col - 1, row: this.currentPosition.row - 1}))!)
+        
+        this.killablePieces.push(piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row - 1])
+        if(this.currentPosition.col - 1 >= 0)
+            this.killablePieces.push(piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row - 1])
 
 
         for (var moves in this.killablePieces) { 
@@ -64,16 +66,18 @@ export class Pawn extends Piece {
                 }
             }
         }
-        if(!this.killablePieces.length) {
-            this.canEnPassant = true
-        }
+
         this.killablePieces = []
     }
 
     enPassant() {
-        if(this.currentPosition.row === 3 && this.canEnPassant) {
-            this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + 1, row: this.currentPosition.row}))!)
-            this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col - 1, row: this.currentPosition.row}))!)
+        if(/*this.currentPosition.row === 3 &&*/ true) {
+            if(!piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row - 1])
+                this.enPassantPieces.push(piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row])
+            if(this.currentPosition.col - 1 >= 0)
+                if(!piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row - 1])
+                    this.enPassantPieces.push(piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row])
+
             for (var moves in this.enPassantPieces) { 
                 if(this.enPassantPieces[moves]) {
                     if(this.enPassantPieces[moves].pieceColor != this.pieceColor) {
@@ -85,16 +89,13 @@ export class Pawn extends Piece {
                 }
             }
             this.enPassantPieces = []
-            this.canEnPassant = false
         }
     }
 
     promote (col: number) {
-        const index = piecesInPlay.indexOf(this)
-        this.chess!.remove(piecesInPlay[index])
-        piecesInPlay.splice(index, 1)
+        this.chess!.remove(this)
         const newQueen = new Queen(Resources.WhiteQueen, {col: col, row: 0 }, this.grid, 'White', this.chess!)
-        piecesInPlay.push(newQueen)
+        piecesInPlay[col][0] = newQueen
         this.chess?.add(newQueen)
 
         // Easter Egg
