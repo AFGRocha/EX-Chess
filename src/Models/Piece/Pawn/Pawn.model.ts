@@ -10,6 +10,7 @@ export class Pawn extends Piece {
     firstMove = true  
     killablePieces: Piece[] = []
     enPassantPieces: Piece[] = []
+    canEnPassant: boolean = false;
 
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
         super(asset,tilePosition,grid, pieceColor, `${pieceColor}Pawn${tilePosition.col}`, chess);
@@ -58,22 +59,28 @@ export class Pawn extends Piece {
                 }
             }
         }
+        if(!this.killablePieces.length) {
+            this.canEnPassant = true
+        }
         this.killablePieces = []
     }
 
     enPassant() {
-        this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + 1, row: this.currentPosition.row}))!)
-        this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col - 1, row: this.currentPosition.row}))!)
-        for (var moves in this.enPassantPieces) { 
-            if(this.enPassantPieces[moves]) {
-                if(this.enPassantPieces[moves].pieceColor != this.pieceColor) {
-                    const killablePiece = this.enPassantPieces[moves]
-                    const drawX = killablePiece.currentPosition.col - this.currentPosition.col 
+        if(this.currentPosition.row === 3 && this.canEnPassant) {
+            this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col + 1, row: this.currentPosition.row}))!)
+            this.enPassantPieces.push(piecesInPlay.find(piece => JSON.stringify(piece.currentPosition) === JSON.stringify({col: this.currentPosition.col - 1, row: this.currentPosition.row}))!)
+            for (var moves in this.enPassantPieces) { 
+                if(this.enPassantPieces[moves]) {
+                    if(this.enPassantPieces[moves].pieceColor != this.pieceColor) {
+                        const killablePiece = this.enPassantPieces[moves]
+                        const drawX = killablePiece.currentPosition.col - this.currentPosition.col 
 
-                    this.drawMove(drawX * 100, -100, killablePiece.currentPosition.col, killablePiece.currentPosition.row - 1, killablePiece)
-                }    
+                        this.drawMove(drawX * 100, -100, killablePiece.currentPosition.col, killablePiece.currentPosition.row - 1, killablePiece)
+                    }    
+                }
             }
+            this.enPassantPieces = []
+            this.canEnPassant = false
         }
-        this.enPassantPieces = []
     }
 }

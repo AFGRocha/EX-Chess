@@ -37,7 +37,7 @@ export class Chess extends ex.Scene {
         piecesInPlay.push(new Pawn(Resources.WhitePawn, {col: 7, row: 6 }, this.board.tiles, 'White', this))
         
         piecesInPlay.push(new Pawn(Resources.BlackPawn, {col: 5, row: 3 }, this.board.tiles, 'Black', this))
-        piecesInPlay.push(new Pawn(Resources.BlackPawn, {col: 6, row: 3 }, this.board.tiles, 'Black', this))
+        piecesInPlay.push(new Pawn(Resources.BlackPawn, {col: 5, row: 2 }, this.board.tiles, 'Black', this))
 
 
         for (var piece in piecesInPlay) {
