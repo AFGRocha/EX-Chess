@@ -46,16 +46,12 @@ export class King extends smallDistancePiece {
         if(y === 7) {
             if(x === 5) { 
                 // is there a piece in f1?
-                const possibleBlockingPiece = piecesInPlay.find(piece => 
-                    JSON.stringify(piece.currentPosition) === 
-                    JSON.stringify({col: 6, row: 7}))
+                const possibleBlockingPiece = piecesInPlay[6][7]
 
                 console.log(possibleBlockingPiece)
                 if(!possibleBlockingPiece) {
                     console.log('not blocked') 
-                    const possibleRook = piecesInPlay.find(piece => 
-                        JSON.stringify(piece.currentPosition) === 
-                        JSON.stringify({col: 7, row: 7}))
+                    const possibleRook = piecesInPlay[7][7]
                     if (possibleRook instanceof Rook){
                         possibleRook.move(5,7)
                         this.move(6,7)
@@ -63,18 +59,12 @@ export class King extends smallDistancePiece {
                 }
             } else if (x === 3) {
                 // is there a piece in c1?
-                const possibleBlockingPieceC1 = piecesInPlay.find(piece => 
-                    JSON.stringify(piece.currentPosition) === 
-                    JSON.stringify({col: 2, row: 7}))
+                const possibleBlockingPieceC1 = piecesInPlay[2][7]
                 // is there a piece in b1?
-                const possibleBlockingPieceB1 = piecesInPlay.find(piece => 
-                    JSON.stringify(piece.currentPosition) === 
-                    JSON.stringify({col: 1, row: 7}))
+                const possibleBlockingPieceB1 = piecesInPlay[1][7]
                     
                 if(!possibleBlockingPieceC1 && !possibleBlockingPieceB1) {
-                    const possibleRook = piecesInPlay.find(piece => 
-                        JSON.stringify(piece.currentPosition) === 
-                        JSON.stringify({col: 0, row: 7}))
+                    const possibleRook = piecesInPlay[0][7]
                     if (possibleRook instanceof Rook){
                         possibleRook.move(3,7)
                         this.move(2,7)

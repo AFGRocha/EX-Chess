@@ -11,7 +11,6 @@ export function longDistanceMixin<Base extends Class>(base: Base) {
                     const colPosition = this.currentPosition.col + (i * directionModifier[j].x)
                     const rowPosition = this.currentPosition.row + (i * directionModifier[j].y)
                     if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
-                        console.log(colPosition, rowPosition)
                         break
                     }
 
