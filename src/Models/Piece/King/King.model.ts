@@ -53,8 +53,8 @@ export class King extends smallDistancePiece {
                     console.log('not blocked') 
                     const possibleRook = piecesInPlay[7][7]
                     if (possibleRook instanceof Rook){
-                        possibleRook.move(5,7)
                         this.move(6,7)
+                        possibleRook.move(5,7)
                     }
                 }
             } else if (x === 3) {
@@ -66,8 +66,8 @@ export class King extends smallDistancePiece {
                 if(!possibleBlockingPieceC1 && !possibleBlockingPieceB1) {
                     const possibleRook = piecesInPlay[0][7]
                     if (possibleRook instanceof Rook){
-                        possibleRook.move(3,7)
                         this.move(2,7)
+                        possibleRook.move(3,7)
                     }
                 }
             }
