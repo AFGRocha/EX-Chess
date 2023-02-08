@@ -4,21 +4,25 @@ import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
 
 class Game extends ex.Engine {
-    constructor() {
-      super({
-        // set the viewport dimensions
-        viewport: { width: 800, height: 900 },
-      
-        // sets the resolution
-        resolution: { width: 800, height: 900 }
-      });
-    }
-    initialize() {
+  constructor() {
+    super({
+      // set the viewport dimensions
+      viewport: { width: 800, height: 900 },
+    
+      // sets the resolution
+      resolution: { width: 800, height: 900 }
+    });
+  }
+  initialize() {
 
-      const loader = new ex.Loader([Resources.WhiteKnight,Resources.WhiteKing,Resources.WhiteQueen, Resources.WhitePawn, Resources.WhiteRook, Resources.WhiteBishop,Resources.BlackPawn]);
-      this.start(loader);
+  // Build and load resources
+  var loader = new ex.Loader();
+  (Object.keys(Resources) as (keyof typeof Resources)[]).forEach((key) => {
+    loader.addResource(Resources[key]);
+  });
+  this.start(loader);
       
-    }
+  }
 }
   
 export const chess = new Chess()
