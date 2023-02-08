@@ -1,9 +1,10 @@
 import * as ex from 'excalibur';
+import { Resources } from '../../../resources';
 import { Chess } from '../../../Scenes/chess';
 import { piecesInPlay } from '../../../State/Grid.state';
-import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition } from '../Piece.model';
+import { Queen } from '../Queen/Queen.model';
 
 
 export class Pawn extends Piece {
@@ -40,6 +41,10 @@ export class Pawn extends Piece {
 
         if (this.firstMove){
             this.firstMove = false;
+        }
+
+        if(!y) {
+            this.promote(x)
         }
     }
 
@@ -82,5 +87,17 @@ export class Pawn extends Piece {
             this.enPassantPieces = []
             this.canEnPassant = false
         }
+    }
+
+    promote (col: number) {
+        const index = piecesInPlay.indexOf(this)
+        this.chess!.remove(piecesInPlay[index])
+        piecesInPlay.splice(index, 1)
+        const newQueen = new Queen(Resources.WhiteQueen, {col: col, row: 0 }, this.grid, 'White', this.chess!)
+        piecesInPlay.push(newQueen)
+        this.chess?.add(newQueen)
+
+        // Easter Egg
+        console.log('yas queen slay')
     }
 }
