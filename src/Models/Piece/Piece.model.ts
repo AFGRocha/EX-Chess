@@ -81,9 +81,7 @@ export class Piece extends ex.Actor {
         }
 
         if(this.chess!.exMeter.isOn) {
-            this.chess!.exMeter.bar.width = this.chess!.exMeter.bar.width - this.exAmount
-            this.chess!.exMeter.isOn = false
-            this.chess!.exMeter.changeColor()
+            this.spendMeter()
         }
         
     }
@@ -118,6 +116,12 @@ export class Piece extends ex.Actor {
     }
 
     exMove() {
-        
+
+    }
+
+    spendMeter () {
+        this.chess!.exMeter.bar.width = this.chess!.exMeter.bar.width - this.exAmount
+        this.chess!.exMeter.isOn = false
+        this.chess!.exMeter.changeColor()
     }
 }
