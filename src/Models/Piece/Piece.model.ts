@@ -95,6 +95,12 @@ export class Piece extends ex.Actor {
             }
             this.chess!.board.off("pointerdown");
         });
+
+        this.chess!.exMeter.on('pointerdown', () => {
+            for (var moves in piece.availableTiles) {
+                this.removeChild(piece.availableTiles[moves])
+            }
+        });
     }
 
     drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece |  null = null) {
