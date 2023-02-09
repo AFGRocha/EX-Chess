@@ -24,6 +24,7 @@ export class Piece extends ex.Actor {
     chess: Chess | null = null
     isSelected: boolean = false
     pieceColor: string = ''
+    exAmount: number = 0
     grid
     
     constructor(asset: ex.ImageSource, position: PiecePosition, grid: TilePosition[][], pieceColor: string, name: string, chess: Chess ) { 
@@ -79,8 +80,12 @@ export class Piece extends ex.Actor {
             this.removeChild(this.availableTiles[moves])
         }
 
-        this.chess!.exMeter.isOn = false
-        this.chess!.exMeter.changeColor()
+        if(this.chess!.exMeter.isOn) {
+            this.chess!.exMeter.bar.width = this.chess!.exMeter.bar.width - this.exAmount
+            this.chess!.exMeter.isOn = false
+            this.chess!.exMeter.changeColor()
+        }
+        
     }
 
     cancel(piece: Piece) {
