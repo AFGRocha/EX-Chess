@@ -3,6 +3,7 @@ import { smallDistanceMixin } from '../../../Mixins/SmallMovementPiece.mixin';
 import { Resources } from '../../../resources';
 import { Chess } from '../../../Scenes/chess';
 import { piecesInPlay } from '../../../State/Grid.state';
+import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition } from '../Piece.model';
 import { Queen } from '../Queen/Queen.model';
@@ -121,5 +122,45 @@ export class Pawn extends smallDistancePiece {
 
         this.smallDistanceMove(directionModifier, piecesInPlay)
 
+        if(this.chess?.exMeter.bar.width === 300) {
+            let otherPawnLeft
+            let otherPawnRight
+            if(this.currentPosition.col - 1 >= 0) {
+                otherPawnLeft = piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row]
+            
+                if(otherPawnLeft) {
+                    this.specialLevel3(-100,0, this.currentPosition.col - 1)
+                }
+            } 
+            if(this.currentPosition.col + 1 <= 7) {
+                otherPawnRight = piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row]
+                if(otherPawnRight) {
+                    this.specialLevel3(100,0, this.currentPosition.col + 1)
+                }
+            }
+                
+        }
+    }
+
+    specialLevel3(x: number, y: number, col: number) {
+        const position = new ex.Vector(x, y)
+        const otherPawn = piecesInPlay[col][this.currentPosition.row]
+        otherPawn.off('pointerdown')  // ugly solution to double selection
+        const availableMove = new AvailableMove(position, this.availableTileColor)
+        availableMove.on('pointerdown', () => {
+            const child = new Pawn(Resources.WhitePawn, {col: col, row: this.currentPosition.row - 1 }, this.chess!.board.tiles, 'White', this.chess!)
+            piecesInPlay[col][this.currentPosition.row - 1] = child
+            this.chess!.add(child)
+            this.chess!.exMeter.bar.width = this.chess!.exMeter.bar.width - 300
+            this.chess!.exMeter.isOn = false
+            this.chess!.exMeter.changeColor()
+            for (var moves in this.availableTiles) {
+                this.removeChild(this.availableTiles[moves])
+            }
+            // ugly solution to double selection
+            otherPawn.onInitialize()
+        });
+        this.addChild(availableMove)
+        this.availableTiles.push(availableMove)
     }
 }
