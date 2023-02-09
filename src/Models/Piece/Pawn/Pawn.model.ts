@@ -11,7 +11,6 @@ import { Queen } from '../Queen/Queen.model';
 
 const smallDistancePiece = smallDistanceMixin(Piece)
 export class Pawn extends smallDistancePiece {
-    firstMove = true  
     killablePieces: Piece[] = []
     enPassantPieces: Piece[] = []
 
@@ -26,20 +25,22 @@ export class Pawn extends smallDistancePiece {
 
     select() {
         if(!this.chess?.exMeter.isOn){
-            if(this.firstMove) {    
-                const directionModifier = [
-                    {x: 0, y: -2}, // Up x2
-                ]
-        
-                this.smallDistanceMove(directionModifier, piecesInPlay)
-            }
-            
             if(!piecesInPlay[this.currentPosition.col][this.currentPosition.row - 1]) {
+                
+                if(this.currentPosition.row === 6 && !piecesInPlay[this.currentPosition.col][this.currentPosition.row - 2]) {    
+                    const directionModifier = [
+                        {x: 0, y: -2}, // Up x2
+                    ]
+            
+                    this.smallDistanceMove(directionModifier, piecesInPlay)
+                } 
+
                 const directionModifier = [
                     {x: 0, y: -1}, // Up 
                 ]
-        
+
                 this.smallDistanceMove(directionModifier, piecesInPlay)
+                
             }
     
             this.getDiagonalPiecesAndDrawMove()
@@ -51,10 +52,6 @@ export class Pawn extends smallDistancePiece {
 
     move(x: number, y: number) {
         super.move(x, y)
-
-        if (this.firstMove){
-            this.firstMove = false;
-        }
 
         if(!y) {
             this.promote(x)
@@ -127,14 +124,16 @@ export class Pawn extends smallDistancePiece {
             let otherPawnRight
             if(this.currentPosition.col - 1 >= 0) {
                 otherPawnLeft = piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row]
-            
+
                 if(otherPawnLeft) {
+                    this.otherPawns.push(otherPawnLeft)
                     this.specialLevel3(-100,0, this.currentPosition.col - 1)
                 }
             } 
             if(this.currentPosition.col + 1 <= 7) {
                 otherPawnRight = piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row]
                 if(otherPawnRight) {
+                    this.otherPawns.push(otherPawnRight)
                     this.specialLevel3(100,0, this.currentPosition.col + 1)
                 }
             }
@@ -158,9 +157,16 @@ export class Pawn extends smallDistancePiece {
                 this.removeChild(this.availableTiles[moves])
             }
             // ugly solution to double selection
-            otherPawn.onInitialize()
+            this.reEnablePawns()
         });
         this.addChild(availableMove)
         this.availableTiles.push(availableMove)
+    }
+    // ugly solution to double selection
+    otherPawns: Pawn[] = []
+    reEnablePawns () {
+        for(var pawn in this.otherPawns) {
+            this.otherPawns[pawn].onInitialize()
+        }
     }
 }
