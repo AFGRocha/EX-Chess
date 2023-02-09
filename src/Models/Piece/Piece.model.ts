@@ -66,6 +66,9 @@ export class Piece extends ex.Actor {
     }
 
     select(){
+        if(this.chess?.exMeter.isOn) {
+            this.exMove()
+        }
         this.cancel(this)
     }
 
@@ -77,6 +80,9 @@ export class Piece extends ex.Actor {
         for (var moves in this.availableTiles) {
             this.removeChild(this.availableTiles[moves])
         }
+
+        this.chess!.exMeter.isOn = false
+        this.chess!.exMeter.changeColor()
     }
 
     cancel(piece: Piece) {
@@ -100,5 +106,9 @@ export class Piece extends ex.Actor {
         });
         this.addChild(availableMove)
         this.availableTiles.push(availableMove)
+    }
+
+    exMove() {
+        
     }
 }

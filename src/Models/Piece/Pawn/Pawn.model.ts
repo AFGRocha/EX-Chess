@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { smallDistanceMixin } from '../../../Mixins/SmallMovementPiece.mixin';
 import { Resources } from '../../../resources';
 import { Chess } from '../../../Scenes/chess';
 import { piecesInPlay } from '../../../State/Grid.state';
@@ -7,7 +8,8 @@ import { Piece, PiecePosition } from '../Piece.model';
 import { Queen } from '../Queen/Queen.model';
 
 
-export class Pawn extends Piece {
+const smallDistancePiece = smallDistanceMixin(Piece)
+export class Pawn extends smallDistancePiece {
     firstMove = true  
     killablePieces: Piece[] = []
     enPassantPieces: Piece[] = []
@@ -21,18 +23,27 @@ export class Pawn extends Piece {
     }
 
     select() {
-        if(this.firstMove) {    
-            this.drawMove(0, -200, this.currentPosition.col, this.currentPosition.row - 2)
+        if(!this.chess?.exMeter.isOn){
+            if(this.firstMove) {    
+                const directionModifier = [
+                    {x: 0, y: -2}, // Up x2
+                ]
+        
+                this.smallDistanceMove(directionModifier, piecesInPlay)
+            }
+            
+            if(!piecesInPlay[this.currentPosition.col][this.currentPosition.row - 1]) {
+                const directionModifier = [
+                    {x: 0, y: -1}, // Up 
+                ]
+        
+                this.smallDistanceMove(directionModifier, piecesInPlay)
+            }
+    
+            this.getDiagonalPiecesAndDrawMove()
+            this.enPassant()
         }
         
-        if(!piecesInPlay[this.currentPosition.col][this.currentPosition.row - 1]) {
-            this.drawMove(0, -100, this.currentPosition.col, this.currentPosition.row - 1)
-        }
-        // this.drawMove(0, -100, this.currentPosition.col, this.currentPosition.row - 1)
-
-        this.getDiagonalPiecesAndDrawMove()
-        this.enPassant()
-
         super.select()
     }
 
@@ -100,5 +111,14 @@ export class Pawn extends Piece {
 
         // Easter Egg
         console.log('yas queen slay')
+    }
+
+    exMove() {
+        const directionModifier = [
+            {x: 0, y: 1}, // Down
+        ]
+
+        this.smallDistanceMove(directionModifier, piecesInPlay)
+
     }
 }

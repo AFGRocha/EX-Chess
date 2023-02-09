@@ -13,13 +13,14 @@ import { piecesInPlay } from '../State/Grid.state';
 
 export class Chess extends ex.Scene {
     board = new Board();
+    exMeter = new EX(new ex.Vector(0, 800))
     constructor() {
         super();
     }
     onInitialize(_game: ex.Engine) { 
         this.add(this.board);
 
-        this.add(new EX(new ex.Vector(0, 800)))
+        
         piecesInPlay[0][6] = new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this)
         piecesInPlay[0][7] = new Rook(Resources.WhiteRook, {col: 0, row: 7 }, this.board.tiles, 'White', this)
         piecesInPlay[1][7] = new Knight(Resources.WhiteKnight, {col: 1, row: 7 }, this.board.tiles, 'White', this)
@@ -38,5 +39,7 @@ export class Chess extends ex.Scene {
                     this.add(piecesInPlay[pieces][piece])
             }
         }
+
+        this.add(this.exMeter)
     }
 }
