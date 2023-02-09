@@ -33,28 +33,31 @@ export class Rook extends LongDistancePiece {
     }
 
     exMove() {
-        for(let j = 0; j < this.directionModifier.length; j++) {
-            const blockingPieces: Piece[] = []
-            for(let i = 1; i < 8; i++) {
-                const colPosition = this.currentPosition.col + (i * this.directionModifier[j].x)
-                const rowPosition = this.currentPosition.row + (i * this.directionModifier[j].y)
-                if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
-                    break
-                }
-
-                const moveVectorX = (i * this.directionModifier[j].x) * 100
-                const moveVectorY = (i * this.directionModifier[j].y) * 100
-                if(piecesInPlay[colPosition][rowPosition])
-                    if(piecesInPlay[colPosition][rowPosition] instanceof King && piecesInPlay[colPosition][rowPosition].pieceColor === this.pieceColor)
-                        break 
-                    else
-                        blockingPieces.push(piecesInPlay[colPosition][rowPosition])
-                
-                if(this.grid[colPosition])
-                    if(this.grid[colPosition][rowPosition])
-                        this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition, blockingPieces)
-            } 
+        if(this.chess!.exMeter.bar.width >= 100) {
+            for(let j = 0; j < this.directionModifier.length; j++) {
+                const blockingPieces: Piece[] = []
+                for(let i = 1; i < 8; i++) {
+                    const colPosition = this.currentPosition.col + (i * this.directionModifier[j].x)
+                    const rowPosition = this.currentPosition.row + (i * this.directionModifier[j].y)
+                    if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
+                        break
+                    }
+    
+                    const moveVectorX = (i * this.directionModifier[j].x) * 100
+                    const moveVectorY = (i * this.directionModifier[j].y) * 100
+                    if(piecesInPlay[colPosition][rowPosition])
+                        if(piecesInPlay[colPosition][rowPosition] instanceof King && piecesInPlay[colPosition][rowPosition].pieceColor === this.pieceColor)
+                            break 
+                        else
+                            blockingPieces.push(piecesInPlay[colPosition][rowPosition])
+                    
+                    if(this.grid[colPosition])
+                        if(this.grid[colPosition][rowPosition])
+                            this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition, blockingPieces)
+                } 
+            }
         }
+        
     }
 
     drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece | Piece[] | null = null) {
