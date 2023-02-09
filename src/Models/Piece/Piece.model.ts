@@ -1,6 +1,4 @@
 import * as ex from 'excalibur';
-import { chess } from '../../main';
-import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
 import { piecesInPlay } from '../../State/Grid.state';
 import { AvailableMove } from '../AvailableMove/AvailableMove.model';
@@ -94,7 +92,7 @@ export class Piece extends ex.Actor {
         });
     }
 
-    drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece | null = null) {
+    drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece |  null = null) {
         const movePosition = new ex.Vector(vectorX, vectorY)
         const availableMove = new AvailableMove(movePosition, this.availableTileColor)
         
