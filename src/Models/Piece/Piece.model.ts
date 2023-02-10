@@ -92,12 +92,14 @@ export class Piece extends ex.Actor {
                 this.removeChild(piece.availableTiles[moves])
             }
             this.chess!.board.off("pointerdown");
+            piece.availableTiles = []
         });
 
         this.chess!.exMeter.on('pointerdown', () => {
             for (var moves in piece.availableTiles) {
                 this.removeChild(piece.availableTiles[moves])
             }
+            piece.availableTiles = []
         });
     }
 
