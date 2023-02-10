@@ -112,7 +112,7 @@ export class Pawn extends smallDistancePiece {
         console.log('yas queen slay')
     }
 
-    exMove() {
+    DrawExMove() {
         const directionModifier = [
             {x: 0, y: 1}, // Down
         ]

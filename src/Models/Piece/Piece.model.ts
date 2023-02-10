@@ -66,7 +66,7 @@ export class Piece extends ex.Actor {
 
     select(){
         if(this.chess?.exMeter.isOn) {
-            this.exMove()
+            this.DrawExMove()
         }
         this.cancel(this)
     }
@@ -115,7 +115,7 @@ export class Piece extends ex.Actor {
         this.availableTiles.push(availableMove)
     }
 
-    exMove() {
+    DrawExMove() {
 
     }
 

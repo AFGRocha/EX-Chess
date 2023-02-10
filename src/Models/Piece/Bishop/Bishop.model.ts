@@ -33,7 +33,7 @@ export class Bishop extends LongDistancePiece {
         super.select()
     }
 
-    exMove () {
+    DrawExMove () {
         for(let j = 0; j < this.directionModifier.length; j++) {
             for(let i = 1; i < 8; i++) {
                 const colPosition = this.currentPosition.col + (i * this.directionModifier[j].x)

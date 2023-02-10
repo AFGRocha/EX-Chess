@@ -32,7 +32,7 @@ export class Rook extends LongDistancePiece {
         super.select() 
     }
 
-    exMove() {
+    DrawExMove() {
         if(this.chess!.exMeter.bar.width >= 100) {
             for(let j = 0; j < this.directionModifier.length; j++) {
                 const blockingPieces: Piece[] = []
