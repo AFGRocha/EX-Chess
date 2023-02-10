@@ -53,9 +53,6 @@ export class Queen extends LongDistancePiece {
                             king.move(queenPosition.col,queenPosition.row)
                             this.move(kingPosition.col, kingPosition.row) // because i call move there's no need to call spendMeter
                             piecesInPlay[queenPosition.col][queenPosition.row] = king
-                            for (var moves in this.availableTiles) {
-                                this.removeChild(this.availableTiles[moves])
-                            }
                         })
                         this.addChild(availableMove)
                         this.availableTiles.push(availableMove)
