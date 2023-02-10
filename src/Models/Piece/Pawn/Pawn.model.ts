@@ -114,7 +114,10 @@ export class Pawn extends smallDistancePiece {
 
     DrawExMove() {
         const directionModifier = [
-            {x: 0, y: 1}, // Down
+            {x: -1, y: -1}, // UpLeft
+            {x: -1, y: 1}, // DownLeft
+            {x: 1, y: -1}, // UpRight
+            {x: 1, y: 1} // DownRight
         ]
 
         this.smallDistanceMove(directionModifier, piecesInPlay)
