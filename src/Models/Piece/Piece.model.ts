@@ -144,9 +144,9 @@ export class Piece extends ex.Actor {
     getMoveHistory (x: number, y: number) {
         let string = EnumColNames[x]
         if(this.pieceColor === 'White') {
-            string += Math.abs(y-8)
+            string += Math.abs(y - 8)
         } else {
-
+            string += y + 1
         }
 
         return string
