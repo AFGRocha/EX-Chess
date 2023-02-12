@@ -14,6 +14,17 @@ export interface PixelPosition {
     y: number
 }
 
+enum EnumColNames {
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H
+}
+
 export class Piece extends ex.Actor {
     killed = false;
     currentPosition: PiecePosition
@@ -72,6 +83,9 @@ export class Piece extends ex.Actor {
     }
 
     move(x: number, y: number){
+        //@ts-ignore-line
+        window.Alpine.store('history').addHistory(`${this.name} to ${this.getMoveHistory(x,y)}`)
+        console.log()
         piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
         piecesInPlay[x][y] = this
         this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
@@ -125,5 +139,16 @@ export class Piece extends ex.Actor {
         this.chess!.exMeter.bar.width = this.chess!.exMeter.bar.width - this.exAmount
         this.chess!.exMeter.isOn = false
         this.chess!.exMeter.changeColor()
+    }
+
+    getMoveHistory (x: number, y: number) {
+        let string = EnumColNames[x]
+        if(this.pieceColor === 'White') {
+            string += Math.abs(y-8)
+        } else {
+
+        }
+
+        return string
     }
 }
