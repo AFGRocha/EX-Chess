@@ -31,6 +31,7 @@
     "vite": "2.9.15"
   },
   "dependencies": {
-    "@excaliburjs/testing": "^0.25.0"
+    "@excaliburjs/testing": "^0.25.0",
+    "alpinejs": "^3.11.1"
   }
 }
