@@ -1,8 +1,10 @@
 import * as ex from 'excalibur';
-import Alpine from 'alpinejs'
+import Alpine from 'alpinejs';
 import { DisplayMode } from 'excalibur';
 import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
+import { connectToRoom } from './serverConfig';
+
 
 class Game extends ex.Engine {
   constructor() {
@@ -33,6 +35,8 @@ game.initialize();
 game.add('chess', chess)
 game.goToScene('chess')
 
+
+//Alpine
 window.Alpine = Alpine
 
 Alpine.store('history', {
@@ -44,3 +48,6 @@ Alpine.store('history', {
 })
 
 Alpine.start()
+
+
+connectToRoom()
