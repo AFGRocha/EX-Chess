@@ -24,6 +24,7 @@ export class Pawn extends smallDistancePiece {
     }
 
     select() {
+        console.log(this.chess!.exMeter.bar.width)
         if(!this.chess?.exMeter.isOn){
             if(!piecesInPlay[this.currentPosition.col][this.currentPosition.row - 1]) {
                 
@@ -119,8 +120,8 @@ export class Pawn extends smallDistancePiece {
             {x: 1, y: -1}, // UpRight
             {x: 1, y: 1} // DownRight
         ]
-
-        this.smallDistanceMove(directionModifier, piecesInPlay)
+        if(this.chess!.exMeter.bar.width >= 100)
+            this.smallDistanceMove(directionModifier, piecesInPlay)
 
         if(this.chess?.exMeter.bar.width === 300) {
             let otherPawnLeft

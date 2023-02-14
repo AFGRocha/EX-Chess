@@ -79,33 +79,35 @@ export class King extends smallDistancePiece {
 
     DrawExMove () {
         let allPawns: any = []
-        for (var pieces in piecesInPlay) {
+        if(this.chess!.exMeter.bar.width >= 300) {
+            for (var pieces in piecesInPlay) {
                 // allPawns = piecesInPlay[pieces].filter(piece => piece.pieceColor === this.pieceColor);
-            for(var piece in piecesInPlay[pieces]) {
-                if(piecesInPlay[pieces][piece])
-                    if(piecesInPlay[pieces][piece].pieceColor == this.pieceColor && piecesInPlay[pieces][piece] instanceof Pawn)
-                        allPawns.push(piecesInPlay[pieces][piece])
-            } 
-        }
+                for(var piece in piecesInPlay[pieces]) {
+                    if(piecesInPlay[pieces][piece])
+                        if(piecesInPlay[pieces][piece].pieceColor == this.pieceColor && piecesInPlay[pieces][piece] instanceof Pawn)
+                            allPawns.push(piecesInPlay[pieces][piece])
+                } 
+            }
 
-        for (var piece in allPawns) {
-            const vectorX = (allPawns[piece].currentPosition.col - this.currentPosition.col) * 100
-            const vectorY = (allPawns[piece].currentPosition.row - this.currentPosition.row) * 100
-            const vector = new ex.Vector(vectorX, vectorY)
-            const availableMove = new AvailableMove(vector, this.availableTileColor)
-            availableMove.on('pointerdown', () => {
-                this.chess!.remove( piecesInPlay[allPawns[piece].currentPosition.col][allPawns[piece].currentPosition.row])
-                const newKnight =  new Knight(Resources.WhiteKnight, {col: allPawns[piece].currentPosition.col, row: allPawns[piece].currentPosition.row }, this.chess!.board.tiles, 'White', this.chess!)
-                this.chess!.add(newKnight)
-                piecesInPlay[allPawns[piece].currentPosition.col][allPawns[piece].currentPosition.row] = newKnight
+            for (var piece in allPawns) {
+                const vectorX = (allPawns[piece].currentPosition.col - this.currentPosition.col) * 100
+                const vectorY = (allPawns[piece].currentPosition.row - this.currentPosition.row) * 100
+                const vector = new ex.Vector(vectorX, vectorY)
+                const availableMove = new AvailableMove(vector, this.availableTileColor)
+                availableMove.on('pointerdown', () => {
+                    this.chess!.remove( piecesInPlay[allPawns[piece].currentPosition.col][allPawns[piece].currentPosition.row])
+                    const newKnight =  new Knight(Resources.WhiteKnight, {col: allPawns[piece].currentPosition.col, row: allPawns[piece].currentPosition.row }, this.chess!.board.tiles, 'White', this.chess!)
+                    this.chess!.add(newKnight)
+                    piecesInPlay[allPawns[piece].currentPosition.col][allPawns[piece].currentPosition.row] = newKnight
 
-                for (var moves in this.availableTiles) {
-                    this.removeChild(this.availableTiles[moves])
-                }
-                this.spendMeter()
-            })
-            this.addChild(availableMove)
-            this.availableTiles.push(availableMove)
+                    for (var moves in this.availableTiles) {
+                        this.removeChild(this.availableTiles[moves])
+                    }
+                    this.spendMeter()
+                })
+                this.addChild(availableMove)
+                this.availableTiles.push(availableMove)
+            }
         }
     }
 }

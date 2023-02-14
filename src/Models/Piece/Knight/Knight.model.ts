@@ -36,23 +36,25 @@ export class Knight extends smallDistancePiece {
     }
 
     DrawExMove() {
-        for (var col in piecesInPlay) {
-            for(var row in piecesInPlay[col]) {
-                if(!piecesInPlay[col][row]) {
-                    const x = parseInt(col)
-                    const y = parseInt(row)
-                    const vectorX = (x - this.currentPosition.col) * 100
-                    const vectorY = (y - this.currentPosition.row) * 100
-                    const vector = new ex.Vector(vectorX, vectorY)
-                    const availableMove = new AvailableMove(vector, this.availableTileColor)
-                    availableMove.on('pointerdown', () => {
-                        this.move(x, y)
-                        console.log(piecesInPlay)
-                    })
-                    this.addChild(availableMove)
-                    this.availableTiles.push(availableMove)
+        if(this.chess!.exMeter.bar.width >= 200) {
+            for (var col in piecesInPlay) {
+                for(var row in piecesInPlay[col]) {
+                    if(!piecesInPlay[col][row]) {
+                        const x = parseInt(col)
+                        const y = parseInt(row)
+                        const vectorX = (x - this.currentPosition.col) * 100
+                        const vectorY = (y - this.currentPosition.row) * 100
+                        const vector = new ex.Vector(vectorX, vectorY)
+                        const availableMove = new AvailableMove(vector, this.availableTileColor)
+                        availableMove.on('pointerdown', () => {
+                            this.move(x, y)
+                            console.log(piecesInPlay)
+                        })
+                        this.addChild(availableMove)
+                        this.availableTiles.push(availableMove)
+                    } 
                 } 
-            } 
+            }
         }
     }
 }

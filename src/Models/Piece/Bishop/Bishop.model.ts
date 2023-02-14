@@ -34,48 +34,50 @@ export class Bishop extends LongDistancePiece {
     }
 
     DrawExMove () {
-        for(let j = 0; j < this.directionModifier.length; j++) {
-            for(let i = 1; i < 8; i++) {
-                const colPosition = this.currentPosition.col + (i * this.directionModifier[j].x)
-                const rowPosition = this.currentPosition.row + (i * this.directionModifier[j].y)
-                if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
-                    break
-                }
-
-                const moveVectorX = (i * this.directionModifier[j].x) * 100
-                const moveVectorY = (i * this.directionModifier[j].y) * 100
-                const vector = new ex.Vector(moveVectorX, moveVectorY)
-                const blockingPiece = piecesInPlay[colPosition][rowPosition]
-                
-                if(blockingPiece && blockingPiece instanceof Pawn) {
-                    if(blockingPiece.pieceColor != this.pieceColor) {
-                        blockingPiece.off('pointerdown')
-                        const availableMove = new AvailableMove(vector, this.availableTileColor)
-                        availableMove.on('pointerdown', () => {
-                            blockingPiece.pieceColor = this.pieceColor
-                            const asset = Resources.WhitePawn
-                            blockingPiece.sprite = asset.toSprite()
-                            blockingPiece.sprite.width = 100
-                            blockingPiece.sprite.height = 100
-                            blockingPiece.onInitialize()
-                            for (var moves in this.availableTiles) {
-                                this.removeChild(this.availableTiles[moves])
-                            }
-                            this.spendMeter()
-                        })
-
-                        this.addChild(availableMove)
-                        this.availableTiles.push(availableMove)
-                        break 
-                    } else {
+        if(this.chess!.exMeter.bar.width >= 200) {
+            for(let j = 0; j < this.directionModifier.length; j++) {
+                for(let i = 1; i < 8; i++) {
+                    const colPosition = this.currentPosition.col + (i * this.directionModifier[j].x)
+                    const rowPosition = this.currentPosition.row + (i * this.directionModifier[j].y)
+                    if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
                         break
                     }
-                } else if (blockingPiece){
-                    break
-                } else {
-                    continue
-                }
-            } 
+    
+                    const moveVectorX = (i * this.directionModifier[j].x) * 100
+                    const moveVectorY = (i * this.directionModifier[j].y) * 100
+                    const vector = new ex.Vector(moveVectorX, moveVectorY)
+                    const blockingPiece = piecesInPlay[colPosition][rowPosition]
+                    
+                    if(blockingPiece && blockingPiece instanceof Pawn) {
+                        if(blockingPiece.pieceColor != this.pieceColor) {
+                            blockingPiece.off('pointerdown')
+                            const availableMove = new AvailableMove(vector, this.availableTileColor)
+                            availableMove.on('pointerdown', () => {
+                                blockingPiece.pieceColor = this.pieceColor
+                                const asset = Resources.WhitePawn
+                                blockingPiece.sprite = asset.toSprite()
+                                blockingPiece.sprite.width = 100
+                                blockingPiece.sprite.height = 100
+                                blockingPiece.onInitialize()
+                                for (var moves in this.availableTiles) {
+                                    this.removeChild(this.availableTiles[moves])
+                                }
+                                this.spendMeter()
+                            })
+    
+                            this.addChild(availableMove)
+                            this.availableTiles.push(availableMove)
+                            break 
+                        } else {
+                            break
+                        }
+                    } else if (blockingPiece){
+                        break
+                    } else {
+                        continue
+                    }
+                } 
+            }
         }
     }
 }

@@ -67,6 +67,8 @@ export class Piece extends ex.Actor {
             this.chess!.remove(piecesInPlay[killedPiece.currentPosition.col][killedPiece.currentPosition.row])
             piecesInPlay[killedPiece.currentPosition.col][killedPiece.currentPosition.row] = null
         }
+        this.chess!.exMeter.bar.width += 50
+        console.log(this.chess!.exMeter.bar.width)
     }
 
     cleanAvailableTiles () {
@@ -85,7 +87,7 @@ export class Piece extends ex.Actor {
     move(x: number, y: number){
         //@ts-ignore-line
         window.Alpine.store('history').addHistory(`${this.name} to ${this.getMoveHistory(x,y)}`)
-        console.log()
+
         piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
         piecesInPlay[x][y] = this
         this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
@@ -96,6 +98,8 @@ export class Piece extends ex.Actor {
 
         if(this.chess!.exMeter.isOn) {
             this.spendMeter()
+        } else {
+            this.chess!.exMeter.bar.width += 10
         }
         
     }

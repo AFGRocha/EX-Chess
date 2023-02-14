@@ -36,27 +36,29 @@ export class Queen extends LongDistancePiece {
     }
 
     DrawExMove() {
-        for (var pieces in piecesInPlay) {
-            for(var piece in piecesInPlay[pieces]) {
-                if(piecesInPlay[pieces][piece] 
-                    && piecesInPlay[pieces][piece].pieceColor == this.pieceColor 
-                    && piecesInPlay[pieces][piece] instanceof King) {
-                        const king = piecesInPlay[pieces][piece]
-                        const vectorX = (piecesInPlay[pieces][piece].currentPosition.col - this.currentPosition.col) * 100
-                        const vectorY = (piecesInPlay[pieces][piece].currentPosition.row - this.currentPosition.row) * 100
-                        const vector = new ex.Vector(vectorX, vectorY)
-                        const availableMove = new AvailableMove(vector, this.availableTileColor)
-                        availableMove.on('pointerdown', () => {
-                            const kingPosition = king.currentPosition
-                            const queenPosition = this.currentPosition
-                            
-                            king.move(queenPosition.col,queenPosition.row)
-                            this.move(kingPosition.col, kingPosition.row) // because i call move there's no need to call spendMeter
-                            piecesInPlay[queenPosition.col][queenPosition.row] = king
-                        })
-                        this.addChild(availableMove)
-                        this.availableTiles.push(availableMove)
+        if(this.chess!.exMeter.bar.width >= 300) {
+            for (var pieces in piecesInPlay) {
+                for(var piece in piecesInPlay[pieces]) {
+                    if(piecesInPlay[pieces][piece] 
+                        && piecesInPlay[pieces][piece].pieceColor == this.pieceColor 
+                        && piecesInPlay[pieces][piece] instanceof King) {
+                            const king = piecesInPlay[pieces][piece]
+                            const vectorX = (piecesInPlay[pieces][piece].currentPosition.col - this.currentPosition.col) * 100
+                            const vectorY = (piecesInPlay[pieces][piece].currentPosition.row - this.currentPosition.row) * 100
+                            const vector = new ex.Vector(vectorX, vectorY)
+                            const availableMove = new AvailableMove(vector, this.availableTileColor)
+                            availableMove.on('pointerdown', () => {
+                                const kingPosition = king.currentPosition
+                                const queenPosition = this.currentPosition
+                                
+                                king.move(queenPosition.col,queenPosition.row)
+                                this.move(kingPosition.col, kingPosition.row) // because i call move there's no need to call spendMeter
+                                piecesInPlay[queenPosition.col][queenPosition.row] = king
+                            })
+                            this.addChild(availableMove)
+                            this.availableTiles.push(availableMove)
 
+                    } 
                 } 
             } 
         }
