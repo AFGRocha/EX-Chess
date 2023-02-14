@@ -1,4 +1,6 @@
-import { ImageSource } from "excalibur";
+import { ImageSource, Sound } from "excalibur";
+
+//images
 import whitePawn from "./images/white/pawn.png";
 import whiteRook from "./images/white/rook.png";
 import whiteKnight from "./images/white/knight.png";
@@ -11,6 +13,11 @@ import blackKnight from "./images/black/knight.png";
 import blackBishop from "./images/black/bishop.png";
 import blackQueen from "./images/black/queen.png";
 import blackKing from "./images/black/King.png";
+
+//sound
+import moveSound from "./sound/move-self.mp3"
+import killSound from "./sound/capture.mp3"
+import exSound from "./sound/ex-placeholder.wav"
 
 let Resources = {
   WhitePawn: new ImageSource(whitePawn),
@@ -25,6 +32,9 @@ let Resources = {
   BlackBishop: new ImageSource(blackBishop),
   BlackQueen: new ImageSource(blackQueen),
   BlackKing: new ImageSource(blackKing),
+  MoveSound: new Sound(moveSound),
+  KillSound: new Sound(killSound),
+  ExSound: new Sound(exSound)
 };
 
 export { Resources };

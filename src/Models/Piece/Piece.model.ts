@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
 import { piecesInPlay } from '../../State/Grid.state';
 import { AvailableMove } from '../AvailableMove/AvailableMove.model';
@@ -71,6 +72,8 @@ export class Piece extends ex.Actor {
         if(this.chess!.exMeter.bar.width >= 300) {
             this.chess!.exMeter.bar.width = 300
         }
+
+        Resources.KillSound.play()
     }
 
     cleanAvailableTiles () {
@@ -106,6 +109,8 @@ export class Piece extends ex.Actor {
                 this.chess!.exMeter.bar.width = 300
             }
         }
+
+        Resources.MoveSound.play()
         
     }
 
@@ -148,6 +153,7 @@ export class Piece extends ex.Actor {
         this.chess!.exMeter.bar.width = this.chess!.exMeter.bar.width - this.exAmount
         this.chess!.exMeter.isOn = false
         this.chess!.exMeter.changeColor()
+        Resources.ExSound.play()
     }
 
     getMoveHistory (x: number, y: number) {
