@@ -68,7 +68,9 @@ export class Piece extends ex.Actor {
             piecesInPlay[killedPiece.currentPosition.col][killedPiece.currentPosition.row] = null
         }
         this.chess!.exMeter.bar.width += 50
-        console.log(this.chess!.exMeter.bar.width)
+        if(this.chess!.exMeter.bar.width >= 300) {
+            this.chess!.exMeter.bar.width = 300
+        }
     }
 
     cleanAvailableTiles () {
@@ -100,6 +102,9 @@ export class Piece extends ex.Actor {
             this.spendMeter()
         } else {
             this.chess!.exMeter.bar.width += 10
+            if(this.chess!.exMeter.bar.width >= 300) {
+                this.chess!.exMeter.bar.width = 300
+            }
         }
         
     }
