@@ -20,9 +20,10 @@ export function smallDistanceMixin<Base extends Class>(base: Base) {
                 if(blockingPiece) {
                     if(blockingPiece.pieceColor != this.pieceColor) {
                         this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition, blockingPiece)
-                    } else {
-                        continue
-                    }
+                    } 
+                    
+                    continue
+                    
                 } 
                 
                 if(this.grid[colPosition])

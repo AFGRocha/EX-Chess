@@ -48,7 +48,7 @@ export class Bishop extends LongDistancePiece {
                     const vector = new ex.Vector(moveVectorX, moveVectorY)
                     const blockingPiece = piecesInPlay[colPosition][rowPosition]
                     
-                    if(blockingPiece && blockingPiece instanceof Pawn) {
+                    if(blockingPiece instanceof Pawn) {
                         if(blockingPiece.pieceColor != this.pieceColor) {
                             blockingPiece.off('pointerdown')
                             const availableMove = new AvailableMove(vector, this.availableTileColor)
@@ -68,13 +68,8 @@ export class Bishop extends LongDistancePiece {
                             this.addChild(availableMove)
                             this.availableTiles.push(availableMove)
                             break 
-                        } else {
-                            break
                         }
-                    } else if (blockingPiece){
                         break
-                    } else {
-                        continue
                     }
                 } 
             }

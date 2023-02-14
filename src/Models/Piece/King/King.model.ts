@@ -52,25 +52,23 @@ export class King extends smallDistancePiece {
             if(x === 5) { 
                 // is there a piece in f1?
                 const possibleBlockingPiece = piecesInPlay[6][7]
-                if(!possibleBlockingPiece) {
-                    const possibleRook = piecesInPlay[7][7]
-                    if (possibleRook instanceof Rook){
-                        this.move(6,7)
-                        possibleRook.move(5,7)
-                    }
+                const possibleRook = piecesInPlay[7][7]
+                if(!possibleBlockingPiece && possibleRook instanceof Rook) {
+                    this.move(6,7)
+                    possibleRook.move(5,7)
+                    
                 }
             } else if (x === 3) {
                 // is there a piece in c1?
                 const possibleBlockingPieceC1 = piecesInPlay[2][7]
                 // is there a piece in b1?
                 const possibleBlockingPieceB1 = piecesInPlay[1][7]
+
+                const possibleRook = piecesInPlay[0][7]
                     
-                if(!possibleBlockingPieceC1 && !possibleBlockingPieceB1) {
-                    const possibleRook = piecesInPlay[0][7]
-                    if (possibleRook instanceof Rook){
-                        this.move(2,7)
-                        possibleRook.move(3,7)
-                    }
+                if(!possibleBlockingPieceC1 && !possibleBlockingPieceB1 && possibleRook instanceof Rook) {
+                    this.move(2,7)
+                    possibleRook.move(3,7)
                 }
             }
         }
@@ -81,7 +79,6 @@ export class King extends smallDistancePiece {
         let allPawns: any = []
         if(this.chess!.exMeter.bar.width >= 300) {
             for (var pieces in piecesInPlay) {
-                // allPawns = piecesInPlay[pieces].filter(piece => piece.pieceColor === this.pieceColor);
                 for(var piece in piecesInPlay[pieces]) {
                     if(piecesInPlay[pieces][piece])
                         if(piecesInPlay[pieces][piece].pieceColor == this.pieceColor && piecesInPlay[pieces][piece] instanceof Pawn)

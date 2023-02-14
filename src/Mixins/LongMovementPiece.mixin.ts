@@ -19,12 +19,13 @@ export function longDistanceMixin<Base extends Class>(base: Base) {
                     const blockingPiece = piecesInPlay[colPosition][rowPosition]
                     
                     if(blockingPiece) {
-                        if(blockingPiece.pieceColor === this.pieceColor)
-                            break
-                        else {
+
+                        if(blockingPiece.pieceColor != this.pieceColor){
                             this.drawMove(moveVectorX, moveVectorY, colPosition, rowPosition, blockingPiece)
                             break
                         }
+                        
+                        break
                     } 
                     
                     if(this.grid[colPosition])

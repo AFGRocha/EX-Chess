@@ -15,7 +15,7 @@ export class EX extends ex.Actor {
         })
     })
     bar: ex.Rectangle = new ex.Rectangle({
-        width: 0,
+        width: 300,
         height: 40,
         color: ex.Color.fromRGB(255, 255, 0, 1),
     })
