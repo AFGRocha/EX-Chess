@@ -14,12 +14,13 @@ import { piecesInPlay } from '../State/Grid.state';
 export class Chess extends ex.Scene {
     board = new Board();
     exMeter = new EX(new ex.Vector(0, 800))
+    enemyExMeter = new EX(new ex.Vector(800, 800), true)
     constructor() {
         super();
     }
     onInitialize(_game: ex.Engine) { 
         this.add(this.board);
-
+        this.enemyExMeter.scale = new ex.Vector(-1,1)
         
         piecesInPlay[0][6] = new Pawn(Resources.WhitePawn, {col: 0, row: 6 }, this.board.tiles, 'White', this)
         piecesInPlay[1][6] = new Pawn(Resources.WhitePawn, {col: 1, row: 6 }, this.board.tiles, 'White', this)
@@ -44,5 +45,6 @@ export class Chess extends ex.Scene {
         }
 
         this.add(this.exMeter)
+        this.add(this.enemyExMeter)
     }
 }
