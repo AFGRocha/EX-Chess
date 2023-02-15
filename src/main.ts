@@ -20,6 +20,7 @@ class Game extends ex.Engine {
 
   // Build and load resources
   var loader = new ex.Loader();
+  loader.suppressPlayButton = true;
   (Object.keys(Resources) as (keyof typeof Resources)[]).forEach((key) => {
     loader.addResource(Resources[key]);
   });
