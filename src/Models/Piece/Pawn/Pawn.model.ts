@@ -61,8 +61,8 @@ export class Pawn extends smallDistancePiece {
 
 
     getDiagonalPiecesAndDrawMove() {
-        
-        this.killablePieces.push(piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row - 1])
+        if(this.currentPosition.col + 1 <= 7)
+            this.killablePieces.push(piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row - 1])
         if(this.currentPosition.col - 1 >= 0)
             this.killablePieces.push(piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row - 1])
 
@@ -82,9 +82,10 @@ export class Pawn extends smallDistancePiece {
     }
 
     enPassant() {
-        if(/*this.currentPosition.row === 3 &&*/ true) {
-            if(!piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row - 1])
-                this.enPassantPieces.push(piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row])
+        if(this.currentPosition.row === 3) {
+            if(this.currentPosition.col + 1 <= 7)
+                if(!piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row - 1])
+                    this.enPassantPieces.push(piecesInPlay[this.currentPosition.col + 1][this.currentPosition.row])
             if(this.currentPosition.col - 1 >= 0)
                 if(!piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row - 1])
                     this.enPassantPieces.push(piecesInPlay[this.currentPosition.col - 1][this.currentPosition.row])
