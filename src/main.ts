@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import Alpine from 'alpinejs';
 import { DisplayMode } from 'excalibur';
 import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
@@ -35,20 +34,6 @@ game.toggleDebug()
 game.initialize();
 game.add('chess', chess)
 game.goToScene('chess')
-
-
-//Alpine
-window.Alpine = Alpine
-
-Alpine.store('history', {
-  history: [],
-  addHistory(newMove: string) {
-    //@ts-ignore-line
-    this.history.push(newMove);
-  },
-})
-
-Alpine.start()
 
 
 connectToRoom()

@@ -1,9 +1,13 @@
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
+import { socket } from '../../serverConfig';
 import { piecesInPlay } from '../../State/Grid.state';
 import { AvailableMove } from '../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../Board/Board.model';
+import $ from "jquery";
+import { $gameHistory } from '../../State/History.state';
+
 
 export interface PiecePosition {
     col: number,
@@ -89,10 +93,14 @@ export class Piece extends ex.Actor {
         this.cancel(this)
     }
 
-    move(x: number, y: number){
+    move(x: number, y: number, isFromServer: boolean = false){
         //@ts-ignore-line
-        window.Alpine.store('history').addHistory(`${this.name} to ${this.getMoveHistory(x,y)}`)
-
+        // window.Alpine.store('history').addHistory(`${this.name} to ${this.getMoveHistory(x,y)}`)
+        const $newItem = $('<p>').text(`${this.name} to ${this.getMoveHistory(x,y)}`);
+        $gameHistory.append($newItem);
+        
+        const oldPosition = this.currentPosition
+        const newPosition = {col: x, row: y}
         piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
         piecesInPlay[x][y] = this
         this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
@@ -112,6 +120,10 @@ export class Piece extends ex.Actor {
 
         Resources.MoveSound.play()
         
+
+        //Server connection
+        if(!isFromServer)
+            socket.emit('piece-movement', oldPosition, newPosition)
     }
 
     cancel(piece: Piece) {

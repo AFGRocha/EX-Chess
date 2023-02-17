@@ -8,19 +8,17 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="./src/main.ts"></script>
+    <div>
+      <div id="app"></div>
+      <script type="module" src="./src/main.ts"></script>
+  
+      <div id="history" x-data>
+        <h1>
+          History
+        </h1>
+        <div id="history-container">
 
-    <div id="history" x-data>
-      <h1>
-        History
-      </h1>
-      <div>
-        <ul>
-          <template x-for="product in $store.history.history">
-            <p x-text="product"></p>
-          </template>
-        </ul>
+        </div>
       </div>
     </div>
   </body>
