@@ -3,6 +3,8 @@ import { DisplayMode } from 'excalibur';
 import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
 import { connectToRoom } from './serverConfig';
+import $ from "jquery";
+
 
 
 class Game extends ex.Engine {
@@ -30,10 +32,21 @@ class Game extends ex.Engine {
   
 export const chess = new Chess()
 export const game = new Game();
-game.toggleDebug()
-game.initialize();
-game.add('chess', chess)
-game.goToScene('chess')
 
+function startGame () {
+  $("#teste").on("click",function(e) {
+    e.preventDefault();
+    console.log('a')
+    $("#history").show()
+    $("#create-game").hide()
+    game.toggleDebug()
+    game.initialize();
+    game.add('chess', chess)
+    game.goToScene('chess')
+  });
+  
+}
+
+startGame()
 
 connectToRoom()
