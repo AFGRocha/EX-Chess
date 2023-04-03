@@ -3,7 +3,7 @@ let roomId = ''
 //@ts-ignore
 export const socket = io.connect('http://localhost:8080')
 //Server test
-export async function connectToRoom() {
+export async function connectToRoom(roomId: string) {
     socket.emit('join-room', 1, 10)
 }
 

@@ -32,13 +32,32 @@ class Game extends ex.Engine {
   
 export const chess = new Chess()
 export const game = new Game();
+export let roomId = ''
 
 function startGame () {
-  $("#teste").on("click",function(e) {
+  $("#create").on("click",function(e) {
     e.preventDefault();
-    console.log('a')
+    console.log('created')
     $("#history").show()
     $("#create-game").hide()
+    roomId = (Math.random() + 1).toString(36).substring(7);
+    $('#roomId').text("Room Id: " + roomId);
+    connectToRoom(roomId)
+
+    game.toggleDebug()
+    game.initialize();
+    game.add('chess', chess)
+    game.goToScene('chess')
+  });
+
+  $("#join").on("click",function(e) {
+    e.preventDefault();
+    console.log('joined')
+    $('#roomId').text("Room Id: " + $("#room-code").val());
+    $("#history").show()
+    $("#create-game").hide()
+    roomId = $("#room-code").val() as string
+    connectToRoom(roomId)
     game.toggleDebug()
     game.initialize();
     game.add('chess', chess)
@@ -48,5 +67,3 @@ function startGame () {
 }
 
 startGame()
-
-connectToRoom()
