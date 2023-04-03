@@ -30,9 +30,9 @@ class Game extends ex.Engine {
   }
 }
   
-export const chess = new Chess()
+export const chess = new Chess();
 export const game = new Game();
-export let roomId = ''
+let roomId = ''
 
 function startGame () {
   $("#create").on("click",function(e) {

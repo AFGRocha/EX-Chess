@@ -1,12 +1,13 @@
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
-import { socket } from '../../serverConfig';
+import { roomId, socket } from '../../serverConfig';
 import { piecesInPlay } from '../../State/Grid.state';
 import { AvailableMove } from '../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../Board/Board.model';
 import $ from "jquery";
 import { $gameHistory } from '../../State/History.state';
+
 
 
 export interface PiecePosition {
@@ -123,7 +124,7 @@ export class Piece extends ex.Actor {
 
         //Server connection
         if(!isFromServer)
-            socket.emit('piece-movement', oldPosition, newPosition)
+            socket.emit('piece-movement', oldPosition, newPosition, roomId)
     }
 
     cancel(piece: Piece) {
