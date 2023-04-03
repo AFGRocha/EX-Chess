@@ -48,7 +48,6 @@ export class Knight extends smallDistancePiece {
                         const availableMove = new AvailableMove(vector, this.availableTileColor)
                         availableMove.on('pointerdown', () => {
                             this.move(x, y)
-                            console.log(piecesInPlay)
                         })
                         this.addChild(availableMove)
                         this.availableTiles.push(availableMove)

@@ -24,7 +24,6 @@ export class Pawn extends smallDistancePiece {
     }
 
     select() {
-        console.log(this.chess!.exMeter.bar.width)
         if(!this.chess?.exMeter.isOn){
             if(!piecesInPlay[this.currentPosition.col][this.currentPosition.row - 1]) {
                 

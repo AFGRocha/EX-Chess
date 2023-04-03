@@ -37,13 +37,13 @@ let roomId = ''
 function startGame () {
   $("#create").on("click",function(e) {
     e.preventDefault();
-    console.log('created')
     $("#history").show()
     $("#create-game").hide()
     roomId = (Math.random() + 1).toString(36).substring(7);
     $('#roomId').text("Room Id: " + roomId);
-    connectToRoom(roomId)
+    connectToRoom(roomId, 'player1')
 
+    chess.renderView()
     game.toggleDebug()
     game.initialize();
     game.add('chess', chess)
@@ -52,12 +52,13 @@ function startGame () {
 
   $("#join").on("click",function(e) {
     e.preventDefault();
-    console.log('joined')
     $('#roomId').text("Room Id: " + $("#room-code").val());
     $("#history").show()
     $("#create-game").hide()
     roomId = $("#room-code").val() as string
-    connectToRoom(roomId)
+    connectToRoom(roomId, 'player2')
+
+    chess.renderView()
     game.toggleDebug()
     game.initialize();
     game.add('chess', chess)
