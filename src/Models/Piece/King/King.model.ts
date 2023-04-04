@@ -41,8 +41,8 @@ export class King extends smallDistancePiece {
     }
 
 
-    move(x: number, y: number){
-        super.move(x, y)
+    move(x: number, y: number, isFromServer: boolean = false){
+        super.move(x, y, isFromServer)
         
         this.castle(x,y)
         

@@ -1,8 +1,10 @@
 import io from 'socket.io-client';
 import { piecesInPlay } from './State/Grid.state';
 export let roomId = ''
+export let userId = ''
 export let player = ''
 export let turn = 1
+export let playerColor = ''
 //@ts-ignore
 export const socket = io.connect('http://localhost:8080')
 
@@ -11,6 +13,8 @@ export async function connectToRoom(roomId: string, givenPlayer: string) {
     if(givenPlayer === 'player2') {
         turn = -1
     }
+    playerColor = ((givenPlayer === 'player1') ? 'White' : 'Black');
+
     player = givenPlayer
 }
 
@@ -21,19 +25,17 @@ function invert (num: number) {
     return (7 - num) % 7;
 }
 
-socket.on('connected', (id: string) => {
-    roomId = id
+socket.on('connected', (room: string, user: string) => {
+    roomId = room
+    userId = user
 })
 
 
 socket.on('piece-movement-server', (oldPosition: any, newPosition: any, whichPlayer: string) => {
     if(whichPlayer !== player) {
-        console.log('this is play from the other side: ' + whichPlayer)
-        console.log('this side is: ' + player)
         piecesInPlay[invert(oldPosition.col)][invert(oldPosition.row)].move(invert(newPosition.col), invert(newPosition.row), true)
     }
-        
-    console.log('before '+ turn)
+
     turn = -turn
-    console.log('after '+ turn)
+ 
 })

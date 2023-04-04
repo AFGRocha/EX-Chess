@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
-import { player, roomId, socket, turn } from '../../serverConfig';
+import { player, playerColor, roomId, socket, turn } from '../../serverConfig';
 import { piecesInPlay } from '../../State/Grid.state';
 import { AvailableMove } from '../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../Board/Board.model';
@@ -37,7 +37,7 @@ export class Piece extends ex.Actor {
     white = true;
     sprite: ex.Sprite
     availableTileColor = new ex.Color(255, 0, 0, 0.5)
-    nonTurnAvailableTileColor = new ex.Color(0, 255, 0, 0.5)
+    nonTurnAvailableTileColor = new ex.Color(128, 128, 128, 0.5)
     availableTiles: AvailableMove[] = []
     chess: Chess | null = null
     isSelected: boolean = false
@@ -127,7 +127,6 @@ export class Piece extends ex.Actor {
         Resources.MoveSound.play()
         
         if(!isFromServer) {
-            console.log(player)
             socket.emit('piece-movement', oldPosition, newPosition, roomId, player)
         }
            
@@ -151,11 +150,12 @@ export class Piece extends ex.Actor {
     }
 
     drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece |  null = null) {
-        const color = (turn === 1 ? this.availableTileColor : this.nonTurnAvailableTileColor);
+        const color = (turn === 1 && this.pieceColor == playerColor ? this.availableTileColor : this.nonTurnAvailableTileColor);
         const movePosition = new ex.Vector(vectorX, vectorY)
         const availableMove = new AvailableMove(movePosition, color)
         
-        if(turn === 1) {
+        console.log(this.pieceColor)
+        if(turn === 1 && this.pieceColor == playerColor) {
             availableMove.on('pointerdown', () => {
                 if(killablePiece) {
                     this.killPiece(killablePiece)
@@ -164,7 +164,8 @@ export class Piece extends ex.Actor {
             });
         }
 
-        this.addChild(availableMove)
+        if(this.pieceColor == playerColor)
+            this.addChild(availableMove)
         this.availableTiles.push(availableMove)
     }
 
