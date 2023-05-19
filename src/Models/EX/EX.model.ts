@@ -5,21 +5,15 @@ export class EX extends ex.Actor {
     meterAmount: number = 0
     meterBars: number = 0
     enemy: boolean = false
-    label: ex.Label = new ex.Label({
-        text: 'EX',
-        pos: ex.vec(12, 80),
-        font: new ex.Font({
-            family: 'impact',
-            size: 80,
-            unit: ex.FontUnit.Px
-        })
-    })
     bar: ex.Rectangle = new ex.Rectangle({
         width: 0,
         height: 40,
         color: ex.Color.fromRGB(255, 255, 0, 1),
     })
-    constructor(position: ex.Vector, enemy = false) { 
+    sprite: ex.Sprite
+    exOnSprite: ex.Sprite
+
+    constructor(position: ex.Vector, enemy = false, image: ex.ImageSource, exOn: ex.ImageSource) { 
         super({
             width: 100,
             height: 100,
@@ -27,13 +21,18 @@ export class EX extends ex.Actor {
             anchor: ex.Vector.Zero,
         });
         this.enemy = enemy
+        this.sprite = image.toSprite()
+        this.exOnSprite = exOn.toSprite()
     }
 
     onInitialize() {
+        this.graphics.layers.create({ name: 'default', order: -1 })
+        this.graphics.layers.create({ name: 'meterOn', order: 1 })
+
         this.graphics.show(this.bar, { 
             offset: ex.vec(90, 30)
         })
-        this.addChild(this.label)
+        this.graphics.layers.get('default').show(this.sprite)
         if(!this.enemy) {
             this.on('pointerdown', () => {
                 this.isOn= !this.isOn
@@ -44,9 +43,14 @@ export class EX extends ex.Actor {
     }
 
     changeColor () {
-        if(this.isOn)
-                this.label.color = ex.Color.fromRGB(255, 0, 0, 1)
-            else
-                this.label.color = ex.Color.fromRGB(0, 0, 0, 1)
+        console.log(this.graphics)
+        if(this.isOn) {
+            this.graphics.layers.get('default').hide()
+            this.graphics.layers.get('meterOn').show(this.exOnSprite)
+        } else {
+            this.graphics.layers.get('meterOn').hide()
+            this.graphics.layers.get('default').show(this.sprite)
+        }
+                
     }
 }

@@ -19,6 +19,10 @@ import moveSound from "./sound/move-self.mp3"
 import killSound from "./sound/capture.mp3"
 import exSound from "./sound/ex-placeholder.wav"
 
+//meter
+import meter from "./images/Meter/Meter.png";
+import meterOn from "./images/Meter/Meter_On.png";
+
 let Resources = {
   WhitePawn: new ImageSource(whitePawn),
   WhiteRook: new ImageSource(whiteRook),
@@ -34,7 +38,9 @@ let Resources = {
   BlackKing: new ImageSource(blackKing),
   MoveSound: new Sound(moveSound),
   KillSound: new Sound(killSound),
-  ExSound: new Sound(exSound)
+  ExSound: new Sound(exSound),
+  Meter: new ImageSource(meter),
+  MeterOn: new ImageSource(meterOn),
 };
 
 export { Resources };

@@ -14,8 +14,8 @@ import { piecesInPlay } from '../State/Grid.state';
 
 export class Chess extends ex.Scene {
     board = new Board();
-    exMeter = new EX(new ex.Vector(0, 800))
-    enemyExMeter = new EX(new ex.Vector(800, 800), true)
+    exMeter = new EX(new ex.Vector(0, 800), false, Resources.Meter, Resources.MeterOn)
+    enemyExMeter = new EX(new ex.Vector(800, 800), true, Resources.Meter, Resources.Meter)
     whiteSidePawns = 6
     whiteSideBigPieces = 7
     blackSidePawns = 1
@@ -25,7 +25,8 @@ export class Chess extends ex.Scene {
     }
     onInitialize(_game: ex.Engine) { 
         this.add(this.board);
-        this.enemyExMeter.scale = new ex.Vector(-1,1)
+        this.exMeter.scale = new ex.Vector(0.95,0.95)
+        this.enemyExMeter.scale = new ex.Vector(-0.95,0.95)
 
         // this.renderView()
 

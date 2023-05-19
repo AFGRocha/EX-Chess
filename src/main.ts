@@ -44,7 +44,7 @@ function startGame () {
     connectToRoom(roomId, 'player1')
 
     chess.renderView()
-    game.toggleDebug()
+    //game.toggleDebug()
     game.initialize();
     game.add('chess', chess)
     game.goToScene('chess')
@@ -59,7 +59,7 @@ function startGame () {
     connectToRoom(roomId, 'player2')
 
     chess.renderView()
-    game.toggleDebug()
+    //game.toggleDebug()
     game.initialize();
     game.add('chess', chess)
     game.goToScene('chess')
