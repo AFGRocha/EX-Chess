@@ -41,10 +41,17 @@ export class Chess extends ex.Scene {
         this.add(this.enemyExMeter)
 
         socket.on('ex-press-server', (isOn: string, playerPlayed: string) => {
-            console.log(playerPlayed, player)
             if(playerPlayed != player) {
                 this.enemyExMeter.isOn = (isOn === 'true');
                 this.enemyExMeter.changeColor()   
+            }
+        })
+
+        socket.on('ex-spend-meter-server', (playerPlayed: string, ammount: number) => {
+            if(playerPlayed != player) {
+                this.enemyExMeter.bar.width = ( this.enemyExMeter.bar.width - ammount )
+                this.enemyExMeter.isOn = false
+                this.enemyExMeter.changeColor()
             }
         })
     }

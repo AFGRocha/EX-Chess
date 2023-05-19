@@ -95,7 +95,7 @@ export class Piece extends ex.Actor {
         this.cancel(this)
     }
 
-    move(x: number, y: number, isFromServer: boolean = false){
+    move(x: number, y: number, moveOptions = {isFromServer: false, isServerEx: false } ){
         //@ts-ignore-line
         // window.Alpine.store('history').addHistory(`${this.name} to ${this.getMoveHistory(x,y)}`)
         const $newItem = $('<p>').text(`${this.name} to ${this.getMoveHistory(x,y)}`);
@@ -103,6 +103,7 @@ export class Piece extends ex.Actor {
         
         const oldPosition = this.currentPosition
         const newPosition = {col: x, row: y}
+        const isEx = this.chess!.exMeter.isOn
         piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
         piecesInPlay[x][y] = this
         this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
@@ -111,10 +112,13 @@ export class Piece extends ex.Actor {
             this.removeChild(this.availableTiles[moves])
         }
 
-        if(isFromServer) {
-            this.chess!.enemyExMeter.bar.width += 10
-            if(this.chess!.enemyExMeter.bar.width >= 300) {
-                this.chess!.exMeter.bar.width = 300
+        if(moveOptions.isFromServer) {
+            console.log(moveOptions.isServerEx)
+            if(!moveOptions.isServerEx) {
+                this.chess!.enemyExMeter.bar.width += 10
+                if(this.chess!.enemyExMeter.bar.width >= 300) {
+                    this.chess!.exMeter.bar.width = 300
+                }
             }
         } else {
             if(this.chess!.exMeter.isOn) {
@@ -129,8 +133,8 @@ export class Piece extends ex.Actor {
 
         Resources.MoveSound.play()
         
-        if(!isFromServer) {
-            socket.emit('piece-movement', oldPosition, newPosition, roomId, player)
+        if(!moveOptions.isFromServer) {
+            socket.emit('piece-movement', oldPosition, newPosition, roomId, player, isEx.toString())
         }
            
     }
@@ -181,6 +185,7 @@ export class Piece extends ex.Actor {
         this.chess!.exMeter.isOn = false
         this.chess!.exMeter.changeColor()
         Resources.ExSound.play()
+        socket.emit('ex-spend-meter', roomId, player, this.exAmount)
     }
 
     getMoveHistory (x: number, y: number) {
