@@ -15,7 +15,7 @@ import { piecesInPlay } from '../State/Grid.state';
 export class Chess extends ex.Scene {
     board = new Board();
     exMeter = new EX(new ex.Vector(0, 800), false, Resources.Meter, Resources.MeterOn)
-    enemyExMeter = new EX(new ex.Vector(800, 800), true, Resources.Meter, Resources.Meter)
+    enemyExMeter = new EX(new ex.Vector(800, 800), true, Resources.Meter, Resources.MeterOn)
     whiteSidePawns = 6
     whiteSideBigPieces = 7
     blackSidePawns = 1
@@ -39,6 +39,14 @@ export class Chess extends ex.Scene {
 
         this.add(this.exMeter)
         this.add(this.enemyExMeter)
+
+        socket.on('ex-press-server', (isOn: string, playerPlayed: string) => {
+            console.log(playerPlayed, player)
+            if(playerPlayed != player) {
+                this.enemyExMeter.isOn = (isOn === 'true');
+                this.enemyExMeter.changeColor()   
+            }
+        })
     }
 
     
@@ -87,5 +95,4 @@ export class Chess extends ex.Scene {
         piecesInPlay[6][this.blackSideBigPieces] = new Knight(Resources.BlackKnight, {col: 6, row: this.blackSideBigPieces }, this.board.tiles, 'Black', this)
         piecesInPlay[7][this.blackSideBigPieces] = new Rook(Resources.BlackRook, {col: 7, row: this.blackSideBigPieces }, this.board.tiles, 'Black', this)
     }
-
 }

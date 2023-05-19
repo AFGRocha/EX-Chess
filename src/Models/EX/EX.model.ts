@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { player, roomId, socket } from '../../serverConfig';
 
 export class EX extends ex.Actor {
     isOn: boolean = false
@@ -26,30 +27,30 @@ export class EX extends ex.Actor {
     }
 
     onInitialize() {
-        this.graphics.layers.create({ name: 'default', order: -1 })
+        this.graphics.layers.create({ name: 'bar', order: -2 })
+        this.graphics.layers.create({ name: 'meter', order: -1 })
         this.graphics.layers.create({ name: 'meterOn', order: 1 })
-
-        this.graphics.show(this.bar, { 
+        
+        this.graphics.layers.get('bar').show(this.bar, { 
             offset: ex.vec(90, 30)
         })
-        this.graphics.layers.get('default').show(this.sprite)
+        this.graphics.layers.get('meter').show(this.sprite)
         if(!this.enemy) {
             this.on('pointerdown', () => {
                 this.isOn= !this.isOn
-                console.log(this.isOn)
+                socket.emit('ex-press', roomId, player, this.isOn.toString())
                 this.changeColor()
             });
         } 
     }
 
     changeColor () {
-        console.log(this.graphics)
         if(this.isOn) {
-            this.graphics.layers.get('default').hide()
+            this.graphics.layers.get('meter').hide()
             this.graphics.layers.get('meterOn').show(this.exOnSprite)
         } else {
             this.graphics.layers.get('meterOn').hide()
-            this.graphics.layers.get('default').show(this.sprite)
+            this.graphics.layers.get('meter').show(this.sprite)
         }
                 
     }
