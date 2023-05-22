@@ -8,7 +8,7 @@ import { Pawn } from '../Models/Piece/Pawn/Pawn.model';
 import { Queen } from '../Models/Piece/Queen/Queen.model';
 import { Rook } from '../Models/Piece/Rook/Rook.model';
 import { Resources } from '../resources';
-import { player, socket } from '../serverConfig';
+import { invert, player, socket } from '../serverConfig';
 import { piecesInPlay } from '../State/Grid.state';
 
 
@@ -43,18 +43,30 @@ export class Chess extends ex.Scene {
         this.add(this.exMeter)
         this.add(this.enemyExMeter)
 
-        socket.on('ex-press-server', (isOn: string, playerPlayed: string) => {
-            if(playerPlayed != player) {
+        socket.on('ex-press-server', (isOn: string, whichPlayer: string) => {
+            if(whichPlayer != player) {
                 this.enemyExMeter.isOn = (isOn === 'true');
                 this.enemyExMeter.changeColor()   
             }
         })
 
-        socket.on('ex-spend-meter-server', (playerPlayed: string, ammount: number) => {
-            if(playerPlayed != player) {
+        socket.on('ex-spend-meter-server', (whichPlayer: string, ammount: number) => {
+            if(whichPlayer != player) {
                 this.enemyExMeter.bar.width = ( this.enemyExMeter.bar.width - ammount )
                 this.enemyExMeter.isOn = false
                 this.enemyExMeter.changeColor()
+            }
+        })
+
+        socket.on('kill-piece-from-server', (whichPlayer: string, killablePiece: {col: number, row: number}) => {
+            if(whichPlayer !== player) {
+                this.remove(piecesInPlay[invert(killablePiece.col)][invert(killablePiece.row)])
+                piecesInPlay[invert(killablePiece.col)][invert(killablePiece.row)] = null
+                this.enemyExMeter.bar.width += 40
+                
+                if(this.enemyExMeter.bar.width >= 300) {
+                    this.enemyExMeter.bar.width = 300
+                }
             }
         })
     }

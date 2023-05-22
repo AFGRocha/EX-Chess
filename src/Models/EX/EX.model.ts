@@ -7,7 +7,7 @@ export class EX extends ex.Actor {
     meterBars: number = 0
     enemy: boolean = false
     bar: ex.Rectangle = new ex.Rectangle({
-        width: 300,
+        width: 0,
         height: 40,
         color: ex.Color.fromRGB(255, 255, 0, 1),
     })

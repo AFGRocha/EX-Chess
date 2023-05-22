@@ -161,11 +161,11 @@ export class Piece extends ex.Actor {
         const movePosition = new ex.Vector(vectorX, vectorY)
         const availableMove = new AvailableMove(movePosition, color)
         
-        console.log(this.pieceColor)
         if(turn === 1 && this.pieceColor == playerColor) {
             availableMove.on('pointerdown', () => {
                 if(killablePiece) {
                     this.killPiece(killablePiece)
+                    this.emitKill(killablePiece)
                 }
                 this.move(moveX,moveY)
             });
@@ -186,6 +186,10 @@ export class Piece extends ex.Actor {
         this.chess!.exMeter.changeColor()
         Resources.ExSound.play()
         socket.emit('ex-spend-meter', roomId, player, this.exAmount)
+    }
+
+    emitKill (killedPiece: Piece) {
+        socket.emit('kill', roomId, player, killedPiece.currentPosition)
     }
 
     getMoveHistory (x: number, y: number) {

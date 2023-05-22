@@ -18,7 +18,7 @@ export async function connectToRoom(roomId: string, givenPlayer: string) {
     player = givenPlayer
 }
 
-function invert (num: number) {
+export function invert (num: number) {
     if(num === 0)
         return 7
 
