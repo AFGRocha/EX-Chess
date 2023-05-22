@@ -37,7 +37,7 @@ let roomId = ''
 function startGame () {
   $("#create").on("click",function(e) {
     e.preventDefault();
-    $("#history").show()
+    $("#info-container").show()
     $("#create-game").hide()
     roomId = (Math.random() + 1).toString(36).substring(7);
     $('#roomId').text("Room Id: " + roomId);
@@ -53,7 +53,7 @@ function startGame () {
   $("#join").on("click",function(e) {
     e.preventDefault();
     $('#roomId').text("Room Id: " + $("#room-code").val());
-    $("#history").show()
+    $("#info-container").show()
     $("#create-game").hide()
     roomId = $("#room-code").val() as string
     connectToRoom(roomId, 'player2')
@@ -65,6 +65,21 @@ function startGame () {
     game.goToScene('chess')
   });
   
+  $("#history-button").on("click",function(e) { 
+    e.preventDefault();
+    $("#history").show()
+    $("#history-button").removeClass('inactive-tab').addClass('active-tab')
+    $("#exs-button").removeClass('active-tab').addClass('inactive-tab')
+    $("#exs").hide()
+  });
+
+  $("#exs-button").on("click",function(e) { 
+    e.preventDefault();
+    $("#exs").show()
+    $("#exs-button").removeClass('inactive-tab').addClass('active-tab')
+    $("#history-button").removeClass('active-tab').addClass('inactive-tab')
+    $("#history").hide()
+  });
 }
 
 startGame()

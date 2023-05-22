@@ -5,22 +5,37 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="src/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>EX Chess</title>
   </head>
   <body>
     <div id="game">
       <div id="app"></div>
       <script type="module" src="./src/main.ts"></script>
-  
-      <div class="history" id="history">
-        <h2 id="roomId" >Room Id: </h2>
-        <h1>
-          History
-        </h1>
-        <div id="history-container">
-
+      <div class="info-container" id="info-container">
+        <div class="roomid-container"><h2 id="roomId" >Room Id: </h2></div>
+        <div class="tab-bar">
+          <button class="tab-button active-tab" id="history-button">
+            <h1>
+              History
+            </h1>
+          </button>
+          <button class="tab-button inactive-tab" id="exs-button">
+            <h1>
+              EXs
+            </h1>
+          </button>
         </div>
-      </div>
+        <div class="history" id="history">
+          <div id="history-container">
+
+          </div>
+        </div>
+        <div class="exs" id="exs">
+          <div id="exs-container">
+            teste
+          </div>
+        </div>
+    </div>
 
       <div id="create-game">
         <h1>

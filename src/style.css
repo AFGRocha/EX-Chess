@@ -3,24 +3,63 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 
 #app {  
   float: left;
 }
-#history {  
+
+body {
+  background-color: #312E2B;
+  color: #dadada;
+}
+
+.info-container {
   float: right;
   width: 50%;
-  padding: 10px;
   display: none;
+}
+
+#history {  
+  padding: 10px;
+  color: #dadada;
+  background-color: #272522;
 }
 
 #history-container {
   overflow-y: scroll;
-  height: 85vh;
+  height: 80.6vh;
 }
+
+#exs {
+  display: none;
+  background-color: #272522;
+}
+
+.tab-button {
+  border: none;
+  cursor: pointer;
+  color: #dadada;
+  padding: 5px 25px;
+}
+
+.tab-bar {
+  background-color:#201E1C;
+}
+
+.active-tab {
+  background-color:#272522;
+}
+
+.inactive-tab {
+  background-color:#201E1C;
+}
+
+.roomid-container {
+  background-color: #312E2B;
+}
+
 
 #create-game { 
   
