@@ -20,10 +20,13 @@ export class Chess extends ex.Scene {
     whiteSideBigPieces = 7
     blackSidePawns = 1
     blackSideBigPieces = 0
+    background = new ex.Actor({anchor: ex.vec(0, 0)})
     constructor() {
         super();
     }
     onInitialize(_game: ex.Engine) { 
+        this.background.graphics.use(Resources.Background.toSprite())
+        this.add(this.background)
         this.add(this.board);
         this.exMeter.scale = new ex.Vector(0.95,0.95)
         this.enemyExMeter.scale = new ex.Vector(-0.95,0.95)

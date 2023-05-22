@@ -23,6 +23,9 @@ import exSound from "./sound/ex-placeholder.wav"
 import meter from "./images/Meter/Meter.png";
 import meterOn from "./images/Meter/Meter_On.png";
 
+//background
+import background from "./images/background/background.png";
+
 let Resources = {
   WhitePawn: new ImageSource(whitePawn),
   WhiteRook: new ImageSource(whiteRook),
@@ -41,6 +44,7 @@ let Resources = {
   ExSound: new Sound(exSound),
   Meter: new ImageSource(meter),
   MeterOn: new ImageSource(meterOn),
+  Background: new ImageSource(background)
 };
 
 export { Resources };
