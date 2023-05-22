@@ -66,7 +66,15 @@ export class Rook extends LongDistancePiece {
         
         availableMove.on('pointerdown', () => {
             if(killablePiece) {
-                this.killPiece(killablePiece)
+                if(Array.isArray(killablePiece)) {
+                    const index = killablePiece.findIndex(piece => {
+                        return piece.currentPosition.col === moveX && piece.currentPosition.row === moveY;
+                    });
+                    killablePiece.length = index + 1
+                    this.killPiece(killablePiece)
+                } 
+                else
+                    this.killPiece(killablePiece)
             }
             this.move(moveX,moveY)
         });
