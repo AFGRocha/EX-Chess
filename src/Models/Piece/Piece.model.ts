@@ -117,7 +117,7 @@ export class Piece extends ex.Actor {
             if(!moveOptions.isServerEx) {
                 this.chess!.enemyExMeter.bar.width += 10
                 if(this.chess!.enemyExMeter.bar.width >= 300) {
-                    this.chess!.exMeter.bar.width = 300
+                    this.chess!.enemyExMeter.bar.width = 300
                 }
             }
         } else {
