@@ -87,6 +87,7 @@ export class Rook extends LongDistancePiece {
             for (var piece in killedPiece) {
                 this.chess!.remove(piecesInPlay[killedPiece[piece].currentPosition.col][killedPiece[piece].currentPosition.row])
                 piecesInPlay[killedPiece[piece].currentPosition.col][killedPiece[piece].currentPosition.row] = null
+                this.emitKill(killedPiece[piece])
             }
         }
         else {
