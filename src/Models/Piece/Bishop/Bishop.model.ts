@@ -8,6 +8,7 @@ import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { Pawn } from '../Pawn/Pawn.model';
 import { Piece, PiecePosition } from '../Piece.model';
+import { socket, roomId, player } from '../../../serverConfig';
 
 const LongDistancePiece = longDistanceMixin(Piece)
 
@@ -59,6 +60,7 @@ export class Bishop extends LongDistancePiece {
                                 blockingPiece.sprite.width = 100
                                 blockingPiece.sprite.height = 100
                                 blockingPiece.onInitialize()
+                                socket.emit('specific-ex-move', roomId, player, blockingPiece.currentPosition, 'bishop' )
                                 for (var moves in this.availableTiles) {
                                     this.removeChild(this.availableTiles[moves])
                                 }
