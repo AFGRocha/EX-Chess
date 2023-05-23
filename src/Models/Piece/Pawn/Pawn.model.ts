@@ -7,6 +7,7 @@ import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { Piece, PiecePosition } from '../Piece.model';
 import { Queen } from '../Queen/Queen.model';
+import { player, roomId, socket } from '../../../serverConfig';
 
 
 const smallDistancePiece = smallDistanceMixin(Piece)
@@ -162,6 +163,8 @@ export class Pawn extends smallDistancePiece {
             }
             // ugly solution to double selection
             this.reEnablePawns()
+            socket.emit('specific-ex-move', roomId, player, {col: col, row: this.currentPosition.row - 1}, 'pawn' )
+            socket.emit('ex-spend-meter', roomId, player, 300)
         });
         this.addChild(availableMove)
         this.availableTiles.push(availableMove)

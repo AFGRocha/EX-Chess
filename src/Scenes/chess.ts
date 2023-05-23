@@ -91,6 +91,11 @@ export class Chess extends ex.Scene {
                         piecesInPlay[col][row] = newKnight
                         break;
                     case 'pawn':
+                        const newCol = invert(blockingPiecePosition.col)
+                        const newRow = invert(blockingPiecePosition.row)
+                        const child = new Pawn(((player === 'player1') ? Resources.BlackPawn : Resources.WhitePawn), {col: newCol, row: newRow }, this.board.tiles, ((player === 'player1') ? 'Black' : 'White'), this)
+                        piecesInPlay[newCol][newRow] = child
+                        this.add(child)
                         break;
                   }
             }
