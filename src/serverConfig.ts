@@ -35,13 +35,13 @@ socket.on('connected', (room: string, user: string) => {
 socket.on('piece-movement-server', (oldPosition: any, newPosition: any, whichPlayer: string, isEx: string) => {
     if(whichPlayer !== player) {
         piecesInPlay[invert(oldPosition.col)][invert(oldPosition.row)].move(invert(newPosition.col), invert(newPosition.row), {isFromServer: true, isServerEx: isEx === 'true' })
+        nextTurn(whichPlayer)
     }
-    
-    nextTurn(whichPlayer)
 })
 
 
 export function nextTurn(player: string) {
     turn = -turn
+    console.log(turn)
     $('#turn').text("Turn: " + ((player === 'player1') ? 'Black' : 'White'))
 }

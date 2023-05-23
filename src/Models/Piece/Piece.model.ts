@@ -110,7 +110,6 @@ export class Piece extends ex.Actor {
         }
 
         if(moveOptions.isFromServer) {
-            console.log(moveOptions.isServerEx)
             if(!moveOptions.isServerEx) {
                 this.chess!.enemyExMeter.addMeter(50)
             }
@@ -119,6 +118,7 @@ export class Piece extends ex.Actor {
                 this.spendMeter()
             } else {
                 this.chess!.exMeter.addMeter(50)
+                nextTurn(player)
             }
         }
 
