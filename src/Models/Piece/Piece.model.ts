@@ -74,11 +74,8 @@ export class Piece extends ex.Actor {
             this.chess!.remove(piecesInPlay[killedPiece.currentPosition.col][killedPiece.currentPosition.row])
             piecesInPlay[killedPiece.currentPosition.col][killedPiece.currentPosition.row] = null
         }
-        this.chess!.exMeter.bar.width += 50
-        if(this.chess!.exMeter.bar.width >= 300) {
-            this.chess!.exMeter.bar.width = 300
-        }
-
+        this.chess!.exMeter.addMeter(50)
+      
         Resources.KillSound.play()
     }
 
@@ -115,19 +112,13 @@ export class Piece extends ex.Actor {
         if(moveOptions.isFromServer) {
             console.log(moveOptions.isServerEx)
             if(!moveOptions.isServerEx) {
-                this.chess!.enemyExMeter.bar.width += 10
-                if(this.chess!.enemyExMeter.bar.width >= 300) {
-                    this.chess!.enemyExMeter.bar.width = 300
-                }
+                this.chess!.enemyExMeter.addMeter(50)
             }
         } else {
             if(this.chess!.exMeter.isOn) {
                 this.spendMeter()
             } else {
-                this.chess!.exMeter.bar.width += 10
-                if(this.chess!.exMeter.bar.width >= 300) {
-                    this.chess!.exMeter.bar.width = 300
-                }
+                this.chess!.exMeter.addMeter(50)
             }
         }
 

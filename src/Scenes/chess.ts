@@ -63,11 +63,7 @@ export class Chess extends ex.Scene {
             if(whichPlayer !== player) {
                 this.remove(piecesInPlay[invert(killablePiece.col)][invert(killablePiece.row)])
                 piecesInPlay[invert(killablePiece.col)][invert(killablePiece.row)] = null
-                this.enemyExMeter.bar.width += 40
-                
-                if(this.enemyExMeter.bar.width >= 300) {
-                    this.enemyExMeter.bar.width = 300
-                }
+                this.enemyExMeter.addMeter(50)
             }
         })
 

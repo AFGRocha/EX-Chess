@@ -56,4 +56,11 @@ export class EX extends ex.Actor {
         }
                 
     }
+
+    addMeter(value: number) {
+        this.bar.width += value
+        if(this.bar.width >= 300) {
+            this.bar.width = 300
+        }
+    }
 }
