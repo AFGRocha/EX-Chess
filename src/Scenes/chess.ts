@@ -83,6 +83,12 @@ export class Chess extends ex.Scene {
                         piecesInPlay[invert(blockingPiecePosition.col)][invert(blockingPiecePosition.row)].onInitialize()
                         break;
                     case 'king':
+                        const col = invert(blockingPiecePosition.col)
+                        const row = invert(blockingPiecePosition.row)
+                        this.remove( piecesInPlay[col][row])
+                        const newKnight =  new Knight(Resources.WhiteKnight, {col: col, row: row }, this.board.tiles, ((player === 'player1') ? 'White' : 'Black'), this)
+                        this.add(newKnight)
+                        piecesInPlay[col][row] = newKnight
                         break;
                   }
             }
@@ -92,7 +98,7 @@ export class Chess extends ex.Scene {
             if(whichPlayer != player) {
                 const king = piecesInPlay[invert(kingPosition.col)][invert(kingPosition.row)]
                 const queen = piecesInPlay[invert(queenPosition.col)][invert(queenPosition.row)]
-                
+
                 king.move(invert(queenPosition.col), invert(queenPosition.row))
                 queen.move(invert(kingPosition.col), invert(kingPosition.row))
             }

@@ -9,6 +9,7 @@ import { Knight } from '../Knight/Knight.model';
 import { Pawn } from '../Pawn/Pawn.model';
 import { Piece, PiecePosition } from '../Piece.model';
 import { Rook } from '../Rook/Rook.model';
+import { socket, roomId, player } from '../../../serverConfig';
 
 const smallDistancePiece = smallDistanceMixin(Piece)
 
@@ -95,7 +96,7 @@ export class King extends smallDistancePiece {
                 const row = allPawns[piece].currentPosition.row 
                 availableMove.on('pointerdown', () => {
                     this.chess!.remove( piecesInPlay[col][row])
-                    const newKnight =  new Knight(Resources.WhiteKnight, {col: col, row: row }, this.chess!.board.tiles, 'White', this.chess!)
+                    const newKnight =  new Knight(Resources.WhiteKnight, {col: col, row: row }, this.chess!.board.tiles, ((player === 'player1') ? 'White' : 'Black'), this.chess!)
                     this.chess!.add(newKnight)
                     piecesInPlay[col][row] = newKnight
 
@@ -103,6 +104,8 @@ export class King extends smallDistancePiece {
                         this.removeChild(this.availableTiles[moves])
                     }
                     this.spendMeter()
+                    socket.emit('specific-ex-move', roomId, player, {col: col, row: row}, 'king' )
+
                 })
                 this.addChild(availableMove)
                 this.availableTiles.push(availableMove)
