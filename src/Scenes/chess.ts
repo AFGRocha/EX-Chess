@@ -86,9 +86,11 @@ export class Chess extends ex.Scene {
                         const col = invert(blockingPiecePosition.col)
                         const row = invert(blockingPiecePosition.row)
                         this.remove( piecesInPlay[col][row])
-                        const newKnight =  new Knight(Resources.WhiteKnight, {col: col, row: row }, this.board.tiles, ((player === 'player1') ? 'White' : 'Black'), this)
+                        const newKnight =  new Knight(((player === 'player1') ? Resources.BlackKnight : Resources.WhiteKnight), {col: col, row: row }, this.board.tiles, ((player === 'player1') ? 'Black' : 'White'), this)
                         this.add(newKnight)
                         piecesInPlay[col][row] = newKnight
+                        break;
+                    case 'pawn':
                         break;
                   }
             }

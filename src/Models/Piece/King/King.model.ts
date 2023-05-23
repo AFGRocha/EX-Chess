@@ -96,7 +96,7 @@ export class King extends smallDistancePiece {
                 const row = allPawns[piece].currentPosition.row 
                 availableMove.on('pointerdown', () => {
                     this.chess!.remove( piecesInPlay[col][row])
-                    const newKnight =  new Knight(Resources.WhiteKnight, {col: col, row: row }, this.chess!.board.tiles, ((player === 'player1') ? 'White' : 'Black'), this.chess!)
+                    const newKnight =  new Knight(((player === 'player1') ? Resources.WhiteKnight : Resources.BlackKnight), {col: col, row: row }, this.chess!.board.tiles, ((player === 'player1') ? 'White' : 'Black'), this.chess!)
                     this.chess!.add(newKnight)
                     piecesInPlay[col][row] = newKnight
 
