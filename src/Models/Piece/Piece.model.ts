@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
-import { player, playerColor, roomId, socket, turn } from '../../serverConfig';
+import { nextTurn, player, playerColor, roomId, socket, turn } from '../../serverConfig';
 import { piecesInPlay } from '../../State/Grid.state';
 import { AvailableMove } from '../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../Board/Board.model';
@@ -186,6 +186,7 @@ export class Piece extends ex.Actor {
         this.chess!.exMeter.changeColor()
         Resources.ExSound.play()
         socket.emit('ex-spend-meter', roomId, player, this.exAmount)
+        nextTurn(player)
     }
 
     emitKill (killedPiece: Piece) {

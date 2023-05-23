@@ -5,6 +5,7 @@ export let userId = ''
 export let player = ''
 export let turn = 1
 export let playerColor = ''
+import $ from "jquery";
 //@ts-ignore
 export const socket = io.connect('http://localhost:8080')
 
@@ -35,7 +36,12 @@ socket.on('piece-movement-server', (oldPosition: any, newPosition: any, whichPla
     if(whichPlayer !== player) {
         piecesInPlay[invert(oldPosition.col)][invert(oldPosition.row)].move(invert(newPosition.col), invert(newPosition.row), {isFromServer: true, isServerEx: isEx === 'true' })
     }
-
-    turn = -turn
- 
+    
+    nextTurn(whichPlayer)
 })
+
+
+export function nextTurn(player: string) {
+    turn = -turn
+    $('#turn').text("Turn: " + ((player === 'player1') ? 'Black' : 'White'))
+}

@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { player, roomId, socket } from '../../serverConfig';
+import { player, roomId, socket, turn } from '../../serverConfig';
 
 export class EX extends ex.Actor {
     isOn: boolean = false
@@ -37,9 +37,11 @@ export class EX extends ex.Actor {
         this.graphics.layers.get('meter').show(this.sprite)
         if(!this.enemy) {
             this.on('pointerdown', () => {
-                this.isOn= !this.isOn
-                socket.emit('ex-press', roomId, player, this.isOn.toString())
-                this.changeColor()
+                if (turn === 1) {
+                    this.isOn= !this.isOn
+                    socket.emit('ex-press', roomId, player, this.isOn.toString())
+                    this.changeColor()
+                }
             });
         } 
     }

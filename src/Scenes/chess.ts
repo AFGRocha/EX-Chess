@@ -8,7 +8,7 @@ import { Pawn } from '../Models/Piece/Pawn/Pawn.model';
 import { Queen } from '../Models/Piece/Queen/Queen.model';
 import { Rook } from '../Models/Piece/Rook/Rook.model';
 import { Resources } from '../resources';
-import { invert, player, socket } from '../serverConfig';
+import { invert, nextTurn, player, socket } from '../serverConfig';
 import { piecesInPlay } from '../State/Grid.state';
 
 
@@ -55,6 +55,7 @@ export class Chess extends ex.Scene {
                 this.enemyExMeter.bar.width = ( this.enemyExMeter.bar.width - ammount )
                 this.enemyExMeter.isOn = false
                 this.enemyExMeter.changeColor()
+                nextTurn(whichPlayer)
             }
         })
 
