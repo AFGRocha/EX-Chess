@@ -6,6 +6,7 @@ import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { King } from '../King/King.model';
 import { Piece, PiecePosition } from '../Piece.model';
+import { socket, roomId, player } from '../../../serverConfig';
 
 const LongDistancePiece = longDistanceMixin(Piece)
 export class Queen extends LongDistancePiece {
@@ -50,6 +51,7 @@ export class Queen extends LongDistancePiece {
                             availableMove.on('pointerdown', () => {
                                 const kingPosition = king.currentPosition
                                 const queenPosition = this.currentPosition
+                                socket.emit('queen-ex-move', roomId, player, kingPosition, queenPosition)
                                 
                                 king.move(queenPosition.col,queenPosition.row)
                                 this.move(kingPosition.col, kingPosition.row) // because i call move there's no need to call spendMeter

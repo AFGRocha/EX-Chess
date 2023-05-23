@@ -1,4 +1,5 @@
 import * as ex from 'excalibur';
+import { player } from '../../serverConfig';
 
 export interface TilePosition {
     x: number,
@@ -40,19 +41,19 @@ export class Board extends ex.Actor {
         //check if the number is even
         if(this.isEven(col)) {
             if(this.isEven(row)) {
-                return this.tileColor.beige
+                return ((player === 'player1') ? this.tileColor.beige : this.tileColor.green) 
             }
             else {
-                return this.tileColor.green
+                return ((player === 'player1') ? this.tileColor.green : this.tileColor.beige)
             }
         }
 
         else {
             if(this.isEven(row)) {
-                return this.tileColor.green
+                return ((player === 'player1') ? this.tileColor.green : this.tileColor.beige)
             }
             else {
-                return this.tileColor.beige
+                return ((player === 'player1') ? this.tileColor.beige : this.tileColor.green)
             }
         }
     }
