@@ -42,6 +42,5 @@ socket.on('piece-movement-server', (oldPosition: any, newPosition: any, whichPla
 
 export function nextTurn(player: string) {
     turn = -turn
-    console.log(turn)
     $('#turn').text("Turn: " + ((player === 'player1') ? 'Black' : 'White'))
 }
