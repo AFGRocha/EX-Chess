@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
-import { nextTurn, player, playerColor, roomId, socket, turn } from '../../serverConfig';
+import { getIsCheck, getKing, kingCheck, nextTurn, player, playerColor, roomId, socket, turn } from '../../serverConfig';
 import { piecesInPlay } from '../../State/Grid.state';
 import { AvailableMove } from '../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../Board/Board.model';
@@ -103,29 +103,47 @@ export class Piece extends ex.Actor {
         const isEx = this.chess!.exMeter.isOn
         piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
         piecesInPlay[x][y] = this
-        this.pos = new ex.Vector(this.grid[x][y].x + 50, this.grid[x][y].y + 50)
-        this.currentPosition = {col: x, row: y}
-        for (var moves in this.availableTiles) {
-            this.removeChild(this.availableTiles[moves])
+
+        function finishMove(piece: Piece) {
+            piece.pos = new ex.Vector(piece.grid[x][y].x + 50, piece.grid[x][y].y + 50)
+
+            piece.currentPosition = {col: x, row: y}
+            for (var moves in piece.availableTiles) {
+                piece.removeChild(piece.availableTiles[moves])
+            }
+    
+            if(moveOptions.isFromServer) {
+                if(!moveOptions.isServerEx) {
+                    piece.chess!.enemyExMeter.addMeter(50)
+                }
+            } else {
+                if(piece.chess!.exMeter.isOn) {
+                    piece.spendMeter()
+                } else {
+                    piece.chess!.exMeter.addMeter(50)
+                    nextTurn(player)
+                }
+            }
+    
+            Resources.MoveSound.play()
+            
+            if(!moveOptions.isFromServer) {
+                socket.emit('piece-movement', oldPosition, newPosition, roomId, player, isEx.toString())
+            }
         }
 
-        if(moveOptions.isFromServer) {
-            if(!moveOptions.isServerEx) {
-                this.chess!.enemyExMeter.addMeter(50)
+        if(getIsCheck()) {
+            const myKing = getKing()
+            kingCheck(myKing.king!, myKing.enemy)
+
+            if(getIsCheck()) {
+                piecesInPlay[x][y] = null
+                piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
+            } else {
+                finishMove(this)
             }
         } else {
-            if(this.chess!.exMeter.isOn) {
-                this.spendMeter()
-            } else {
-                this.chess!.exMeter.addMeter(50)
-                nextTurn(player)
-            }
-        }
-
-        Resources.MoveSound.play()
-        
-        if(!moveOptions.isFromServer) {
-            socket.emit('piece-movement', oldPosition, newPosition, roomId, player, isEx.toString())
+            finishMove(this)
         }
            
     }
@@ -193,5 +211,9 @@ export class Piece extends ex.Actor {
         }
 
         return string
+    }
+
+    getPossibleMoves () {
+
     }
 }

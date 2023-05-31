@@ -112,4 +112,19 @@ export class King extends smallDistancePiece {
             }
         }
     }
+
+
+    getPossibleMoves () {
+        return this.availableMoves(this.directionModifier, piecesInPlay)
+    }
+
+    check(possibleEnemyMoves: {col: number, row: number}[]) {
+        const isCheck = possibleEnemyMoves.find((move: {col: number, row: number}) => move.col === this.currentPosition.col && move.row === this.currentPosition.row)
+        console.log(Boolean(isCheck))
+        return Boolean(isCheck)
+    }
+
+    checkmate() {
+
+    }
 }

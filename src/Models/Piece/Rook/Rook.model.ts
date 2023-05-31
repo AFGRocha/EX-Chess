@@ -94,4 +94,24 @@ export class Rook extends LongDistancePiece {
             super.killPiece(killedPiece)
         }
     }
+
+    getPossibleMoves () {
+        let moves = []
+        if(this.chess!.exMeter.bar.width >= 100) {
+            for(let j = 0; j < this.directionModifier.length; j++) {
+                for(let i = 1; i < 8; i++) {
+                    const colPosition = this.currentPosition.col + (i * this.directionModifier[j].x)
+                    const rowPosition = this.currentPosition.row + (i * this.directionModifier[j].y)
+                    if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
+                        break
+                    }
+     
+                    if(this.grid[colPosition])
+                        if(this.grid[colPosition][rowPosition])
+                            moves.push({col: colPosition, row: rowPosition})
+                } 
+            }
+        }
+        return moves.concat(this.availableMoves(this.directionModifier, piecesInPlay))
+    }
 }

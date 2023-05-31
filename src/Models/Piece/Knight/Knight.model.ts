@@ -56,4 +56,8 @@ export class Knight extends smallDistancePiece {
             }
         }
     }
+
+    getPossibleMoves () {
+        return this.availableMoves(this.directionModifier, piecesInPlay)
+    }
 }

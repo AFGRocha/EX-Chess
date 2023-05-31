@@ -176,4 +176,13 @@ export class Pawn extends smallDistancePiece {
             this.otherPawns[pawn].onInitialize()
         }
     }
+
+    getPossibleMoves () {
+        const possibleDirections = [
+            {x: -1, y: 1}, // DownLeft
+            {x: 1, y: 1} // DownRight
+        ]
+
+        return this.availableMoves(possibleDirections, piecesInPlay)
+    }
 }

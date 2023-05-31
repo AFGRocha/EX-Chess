@@ -65,4 +65,8 @@ export class Queen extends LongDistancePiece {
             } 
         }
     }
+
+    getPossibleMoves () {
+        return this.availableMoves(this.directionModifier, piecesInPlay)
+    }
 }

@@ -34,5 +34,37 @@ export function longDistanceMixin<Base extends Class>(base: Base) {
                 } 
             }
         }
+
+        availableMoves(directionModifierArray: any[], piecesInPlay: any[][]) {
+            const directionModifier = directionModifierArray
+            let moves = []
+            for(let j = 0; j < directionModifier.length; j++) {
+                for(let i = 1; i < 8; i++) {
+                    const colPosition = this.currentPosition.col + (i * directionModifier[j].x)
+                    const rowPosition = this.currentPosition.row + (i * directionModifier[j].y)
+                    if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
+                        break
+                    }
+
+                    const blockingPiece = piecesInPlay[colPosition][rowPosition]
+                    
+                    if(blockingPiece) {
+
+                        if(blockingPiece.pieceColor != this.pieceColor){
+                             moves.push({col: colPosition, row: rowPosition})
+                             break
+                        }
+                        
+                        break
+                    } 
+                    
+                    if(this.grid[colPosition])
+                        if(this.grid[colPosition][rowPosition])
+                            moves.push({col: colPosition, row: rowPosition})
+                } 
+            }
+
+            return moves
+        }
     }
 }

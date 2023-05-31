@@ -8,7 +8,7 @@ import { Pawn } from '../Models/Piece/Pawn/Pawn.model';
 import { Queen } from '../Models/Piece/Queen/Queen.model';
 import { Rook } from '../Models/Piece/Rook/Rook.model';
 import { Resources } from '../resources';
-import { invert, nextTurn, player, socket } from '../serverConfig';
+import { invert, nextTurn, player, setKings, socket } from '../serverConfig';
 import { piecesInPlay } from '../State/Grid.state';
 
 
@@ -154,5 +154,8 @@ export class Chess extends ex.Scene {
         piecesInPlay[5][this.blackSideBigPieces] = new Bishop(Resources.BlackBishop, {col: 5, row: this.blackSideBigPieces }, this.board.tiles, 'Black', this)
         piecesInPlay[6][this.blackSideBigPieces] = new Knight(Resources.BlackKnight, {col: 6, row: this.blackSideBigPieces }, this.board.tiles, 'Black', this)
         piecesInPlay[7][this.blackSideBigPieces] = new Rook(Resources.BlackRook, {col: 7, row: this.blackSideBigPieces }, this.board.tiles, 'Black', this)
+
+
+        setKings(piecesInPlay[((player === 'player1') ? 4 : 3)][this.whiteSideBigPieces], piecesInPlay[((player === 'player1') ? 4 : 3)][this.blackSideBigPieces]) 
     }
 }

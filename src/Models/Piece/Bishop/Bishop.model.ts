@@ -77,4 +77,8 @@ export class Bishop extends LongDistancePiece {
             }
         }
     }
+
+    getPossibleMoves () {
+        return this.availableMoves(this.directionModifier, piecesInPlay)
+    }
 }
