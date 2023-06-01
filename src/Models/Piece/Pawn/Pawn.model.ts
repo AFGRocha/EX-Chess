@@ -183,6 +183,11 @@ export class Pawn extends smallDistancePiece {
             {x: 1, y: 1} // DownRight
         ]
 
+        if(this.chess!.enemyExMeter.bar.width >= 100) { 
+            possibleDirections.push({x: -1, y: -1})
+            possibleDirections.push({x: 1, y: -1})
+        }
+
         return this.availableMoves(possibleDirections, piecesInPlay)
     }
 }

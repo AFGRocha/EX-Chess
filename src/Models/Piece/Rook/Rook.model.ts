@@ -97,7 +97,7 @@ export class Rook extends LongDistancePiece {
 
     getPossibleMoves () {
         let moves = []
-        if(this.chess!.exMeter.bar.width >= 100) {
+        if(this.chess!.enemyExMeter.bar.width >= 100) {
             for(let j = 0; j < this.directionModifier.length; j++) {
                 for(let i = 1; i < 8; i++) {
                     const colPosition = this.currentPosition.col + (i * this.directionModifier[j].x)
