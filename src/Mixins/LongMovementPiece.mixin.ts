@@ -51,7 +51,7 @@ export function longDistanceMixin<Base extends Class>(base: Base) {
                     if(blockingPiece) {
 
                         if(blockingPiece.pieceColor != this.pieceColor){
-                             moves.push({col: colPosition, row: rowPosition})
+                            moves.push({col: colPosition, row: rowPosition, piecePosition: this.currentPosition})
                              break
                         }
                         
@@ -60,7 +60,7 @@ export function longDistanceMixin<Base extends Class>(base: Base) {
                     
                     if(this.grid[colPosition])
                         if(this.grid[colPosition][rowPosition])
-                            moves.push({col: colPosition, row: rowPosition})
+                        moves.push({col: colPosition, row: rowPosition, piecePosition: this.currentPosition})
                 } 
             }
 

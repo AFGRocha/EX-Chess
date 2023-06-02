@@ -10,6 +10,7 @@ import { Pawn } from '../Pawn/Pawn.model';
 import { Piece, PiecePosition } from '../Piece.model';
 import { Rook } from '../Rook/Rook.model';
 import { socket, roomId, player } from '../../../serverConfig';
+import { simulateMove } from '../../../Helpers/Simulation/MoveSimulation.helper';
 
 const smallDistancePiece = smallDistanceMixin(Piece)
 
@@ -124,7 +125,38 @@ export class King extends smallDistancePiece {
         return Boolean(isCheck)
     }
 
-    checkmate() {
+    checkmate(possibleMoves: {col: number, row: number, piecePosition: any}[]) {
+        for(const move of possibleMoves) {
+            const tempBoard = simulateMove(piecesInPlay, move)
+            let king = null
+            for (var pieces in tempBoard) {
+                for(var piece in tempBoard[pieces]) {
+                    if(tempBoard[pieces][piece] instanceof King && tempBoard[pieces][piece].pieceColor === this.pieceColor) {
+                        king = tempBoard[pieces][piece]
+                        console.log(king)
+                    } 
+                } 
+            }
 
+            const enemyColor = this.pieceColor === 'White' ? 'Black' : 'White';
+            const enemyPieces = tempBoard.flatMap((innerArray) => 
+                innerArray.filter((piece) => {
+                    if(piece != null)
+                        return piece.pieceColor === enemyColor;
+                })
+            )
+
+
+            let possibleEnemyMoves: {col: any; row: any; piecePosition: any;}[] = []
+            enemyPieces.forEach(function (piece) {
+                possibleEnemyMoves = possibleEnemyMoves.concat(piece.getPossibleMoves())
+            }); 
+            
+            console.log(king)
+            if(!king.check(possibleEnemyMoves))
+                return false
+        }
+        console.log('checkmate')
+        return true
     }
 }

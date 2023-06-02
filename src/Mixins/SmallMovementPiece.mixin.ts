@@ -47,7 +47,7 @@ export function smallDistanceMixin<Base extends Class>(base: Base) {
                 
                 if(blockingPiece) {
                     if(blockingPiece.pieceColor != this.pieceColor) {
-                        moves.push({col: colPosition, row: rowPosition})
+                        moves.push({col: colPosition, row: rowPosition, piecePosition: this.currentPosition})
                     } 
                     
                     continue
@@ -56,7 +56,7 @@ export function smallDistanceMixin<Base extends Class>(base: Base) {
                 
                 if(this.grid[colPosition])
                     if(this.grid[colPosition][rowPosition])
-                        moves.push({col: colPosition, row: rowPosition})
+                    moves.push({col: colPosition, row: rowPosition, piecePosition: this.currentPosition})
             }
 
             return moves

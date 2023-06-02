@@ -44,14 +44,12 @@ socket.on('piece-movement-server', (oldPosition: any, newPosition: any, whichPla
 let whiteKing: King | null = null
 let blackKing: King | null = null
 
-export function nextTurn(player: string) {
+export function nextTurn(whichPlayer: string) {
     turn = -turn
-    $('#turn').text("Turn: " + ((player === 'player1') ? 'Black' : 'White'))
+    $('#turn').text("Turn: " + ((whichPlayer === 'player1') ? 'Black' : 'White'))
 
-    if(player === 'player1') {
-        kingCheck(blackKing!, 'White')
-    } else {
-        kingCheck(whiteKing!, 'Black')
+    if(whichPlayer !== player) {
+        kingState()
     }
 }
 
@@ -69,6 +67,7 @@ export function getKing() {
 }
 
 let isCheck = false;
+let isCheckmate = false;
 
 export function kingCheck(king: King, enemyColor: string) {
     const enemyPieces = piecesInPlay.flatMap((innerArray) => 
@@ -79,20 +78,47 @@ export function kingCheck(king: King, enemyColor: string) {
     )
 
 
-    let possibleEnemyMoves: {col: number, row: number}[] = []
+    let possibleEnemyMoves: {col: any; row: any; piecePosition: any;}[] = []
     enemyPieces.forEach(function (piece) {
-        console.log(piece.getPossibleMoves())
         possibleEnemyMoves = possibleEnemyMoves.concat(piece.getPossibleMoves())
     }); 
 
-    console.log(possibleEnemyMoves)
     isCheck = king.check(possibleEnemyMoves)
+}
 
-    if(isCheck) {
+function kingCheckmate(king: King, myColor: string) {
+    const myPieces = piecesInPlay.flatMap((innerArray) => 
+        innerArray.filter((piece) => {
+            if(piece != null)
+                return piece.pieceColor === myColor;
+        })
+    )
+    let possibleMoves: {col: any; row: any; piecePosition: any;}[]  = []
+    myPieces.forEach(function (piece) {
+        possibleMoves = possibleMoves.concat(piece.getPossibleMoves())
+    }); 
 
-    }
+    isCheckmate = king.checkmate(possibleMoves)
+
 }
 
 export function getIsCheck() {
     return isCheck
+}
+
+
+function kingState () {
+    if(player === 'player1') {
+        kingCheck(whiteKing!, 'Black')
+    } else {
+        kingCheck(blackKing!, 'White')
+    }
+
+    if(isCheck) {
+        if(player === 'player1') {
+            kingCheckmate(whiteKing!, 'White')
+        } else {
+            kingCheckmate(blackKing!, 'Black')
+        }
+    }
 }

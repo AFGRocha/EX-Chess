@@ -105,10 +105,14 @@ export class Rook extends LongDistancePiece {
                     if(colPosition < 0 || colPosition > 7 || rowPosition < 0 || rowPosition > 7) {
                         break
                     }
+
+                    if(piecesInPlay[colPosition][rowPosition])
+                        if(piecesInPlay[colPosition][rowPosition] instanceof King && piecesInPlay[colPosition][rowPosition].pieceColor === this.pieceColor)
+                            break 
      
                     if(this.grid[colPosition])
                         if(this.grid[colPosition][rowPosition])
-                            moves.push({col: colPosition, row: rowPosition})
+                            moves.push({col: colPosition, row: rowPosition, piecePosition: this.currentPosition})
                 } 
             }
         }
