@@ -71,7 +71,6 @@ export class Chess extends ex.Scene {
             if(whichPlayer !== player) {
                 switch (piece) {
                     case 'bishop':
-                        console.log('entrou')
                         piecesInPlay[invert(blockingPiecePosition.col)][invert(blockingPiecePosition.row)].pieceColor = ((piecesInPlay[invert(blockingPiecePosition.col)][invert(blockingPiecePosition.row)].pieceColor === 'White') ? 'Black' : 'White');
                         const asset = Resources.WhitePawn
                         piecesInPlay[invert(blockingPiecePosition.col)][invert(blockingPiecePosition.row)].sprite = asset.toSprite()

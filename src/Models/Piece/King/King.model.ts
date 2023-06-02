@@ -121,7 +121,7 @@ export class King extends smallDistancePiece {
 
     check(possibleEnemyMoves: {col: number, row: number}[]) {
         const isCheck = possibleEnemyMoves.find((move: {col: number, row: number}) => move.col === this.currentPosition.col && move.row === this.currentPosition.row)
-        console.log(Boolean(isCheck))
+
         return Boolean(isCheck)
     }
 
@@ -133,7 +133,6 @@ export class King extends smallDistancePiece {
                 for(var piece in tempBoard[pieces]) {
                     if(tempBoard[pieces][piece] instanceof King && tempBoard[pieces][piece].pieceColor === this.pieceColor) {
                         king = tempBoard[pieces][piece]
-                        console.log(king)
                     } 
                 } 
             }
@@ -152,7 +151,6 @@ export class King extends smallDistancePiece {
                 possibleEnemyMoves = possibleEnemyMoves.concat(piece.getPossibleMoves())
             }); 
             
-            console.log(king)
             if(!king.check(possibleEnemyMoves))
                 return false
         }

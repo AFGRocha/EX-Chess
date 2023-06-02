@@ -97,6 +97,7 @@ export class Rook extends LongDistancePiece {
         }
         else {
             super.killPiece(killedPiece)
+            this.emitKill(killedPiece)
         }
     }
 

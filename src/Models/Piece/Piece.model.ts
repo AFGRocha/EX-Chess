@@ -216,4 +216,8 @@ export class Piece extends ex.Actor {
     getPossibleMoves () {
 
     }
+
+    removeSelf() {
+        this.chess!.remove(this)
+    }
 }

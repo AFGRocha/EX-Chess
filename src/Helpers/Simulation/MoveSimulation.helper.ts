@@ -9,7 +9,6 @@ export function simulateMove(board: any[][], move: any) {
     tempBoard[move.piecePosition.col][move.piecePosition.row] = null
     piece.currentPosition = {col: move.col, row: move.row}
     tempBoard[move.col][move.row]  = piece
-    console.log(move)
-    console.log(tempBoard, board)
+    
     return tempBoard
 }

@@ -41,6 +41,13 @@ socket.on('piece-movement-server', (oldPosition: any, newPosition: any, whichPla
     }
 })
 
+socket.on('kill-piece-from-server', (whichPlayer: string, killablePiecePosition: any) => {
+    if(whichPlayer !== player) {
+        piecesInPlay[invert(killablePiecePosition.col)][invert(killablePiecePosition.row)].removeSelf()
+        piecesInPlay[invert(killablePiecePosition.col)][invert(killablePiecePosition.row)] = null
+    }
+})
+
 let whiteKing: King | null = null
 let blackKing: King | null = null
 
