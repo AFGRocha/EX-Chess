@@ -55,7 +55,6 @@ export class Chess extends ex.Scene {
                 this.enemyExMeter.bar.width = ( this.enemyExMeter.bar.width - ammount )
                 this.enemyExMeter.isOn = false
                 this.enemyExMeter.changeColor()
-                nextTurn(whichPlayer)
             }
         })
 
@@ -94,6 +93,7 @@ export class Chess extends ex.Scene {
                         this.add(child)
                         break;
                   }
+                  nextTurn(whichPlayer)
             }
         })
 
