@@ -6,7 +6,7 @@ import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { King } from '../King/King.model';
 import { Piece, PiecePosition } from '../Piece.model';
-import { playerColor } from '../../../serverConfig';
+import { playerColor, turn } from '../../../serverConfig';
 
 const LongDistancePiece = longDistanceMixin(Piece)
 export class Rook extends LongDistancePiece {
@@ -62,23 +62,25 @@ export class Rook extends LongDistancePiece {
     }
 
     drawMove (vectorX: number, vectorY: number, moveX: number, moveY: number, killablePiece: Piece | Piece[] | null = null) {
+        const color = (turn === 1 && this.pieceColor == playerColor ? this.availableTileColor : this.nonTurnAvailableTileColor)
         const movePosition = new ex.Vector(vectorX, vectorY)
-        const availableMove = new AvailableMove(movePosition, this.availableTileColor)
-        
-        availableMove.on('pointerdown', () => {
-            if(killablePiece) {
-                if(Array.isArray(killablePiece)) {
-                    const index = killablePiece.findIndex(piece => {
-                        return piece.currentPosition.col === moveX && piece.currentPosition.row === moveY;
-                    });
-                    killablePiece.length = index + 1
-                    this.killPiece(killablePiece)
-                } 
-                else
-                    this.killPiece(killablePiece)
-            }
-            this.move(moveX,moveY)
-        });
+        const availableMove = new AvailableMove(movePosition, color)
+        if(turn === 1 && this.pieceColor == playerColor) {
+            availableMove.on('pointerdown', () => {
+                if(killablePiece) {
+                    if(Array.isArray(killablePiece)) {
+                        const index = killablePiece.findIndex(piece => {
+                            return piece.currentPosition.col === moveX && piece.currentPosition.row === moveY;
+                        });
+                        killablePiece.length = index + 1
+                        this.killPiece(killablePiece)
+                    } 
+                    else
+                        this.killPiece(killablePiece)
+                }
+                this.move(moveX,moveY)
+            }); 
+        }
         if(this.pieceColor == playerColor)
             this.addChild(availableMove)
 
