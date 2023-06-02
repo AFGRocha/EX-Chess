@@ -6,6 +6,7 @@ import { AvailableMove } from '../../AvailableMove/AvailableMove.model';
 import { TilePosition } from '../../Board/Board.model';
 import { King } from '../King/King.model';
 import { Piece, PiecePosition } from '../Piece.model';
+import { playerColor } from '../../../serverConfig';
 
 const LongDistancePiece = longDistanceMixin(Piece)
 export class Rook extends LongDistancePiece {
@@ -28,7 +29,7 @@ export class Rook extends LongDistancePiece {
         if(!this.chess?.exMeter.isOn){
             this.longDistanceMove(this.directionModifier, piecesInPlay)
         }
-
+        
         super.select() 
     }
 
@@ -78,7 +79,9 @@ export class Rook extends LongDistancePiece {
             }
             this.move(moveX,moveY)
         });
-        this.addChild(availableMove)
+        if(this.pieceColor == playerColor)
+            this.addChild(availableMove)
+
         this.availableTiles.push(availableMove)
     }
 
