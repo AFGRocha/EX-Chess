@@ -26,6 +26,10 @@ import meterOn from "./images/Meter/Meter_On.png";
 //background
 import background from "./images/background/background.png";
 
+//king states
+import check from "./images/Check/Check.png"
+import checkmate from "./images/Checkmate/Checkmate.png"
+
 let Resources = {
   WhitePawn: new ImageSource(whitePawn),
   WhiteRook: new ImageSource(whiteRook),
@@ -44,7 +48,9 @@ let Resources = {
   ExSound: new Sound(exSound),
   Meter: new ImageSource(meter),
   MeterOn: new ImageSource(meterOn),
-  Background: new ImageSource(background)
+  Background: new ImageSource(background),
+  Check: new ImageSource(check),
+  Checkmate: new ImageSource(checkmate)
 };
 
 export { Resources };

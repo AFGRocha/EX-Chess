@@ -10,6 +10,7 @@ import { Rook } from '../Models/Piece/Rook/Rook.model';
 import { Resources } from '../resources';
 import { invert, nextTurn, player, setKings, socket } from '../serverConfig';
 import { piecesInPlay } from '../State/Grid.state';
+import { KingStateAnimation } from '../Models/KingStateAnimation/KingStateAnimation.model';
 
 
 export class Chess extends ex.Scene {
@@ -21,6 +22,9 @@ export class Chess extends ex.Scene {
     blackSidePawns = 1
     blackSideBigPieces = 0
     background = new ex.Actor({anchor: ex.vec(0, 0)})
+    checkAnimation = new KingStateAnimation(Resources.Check)
+    checkmateAnimation = new KingStateAnimation(Resources.Checkmate)
+
     constructor() {
         super();
     }
@@ -42,6 +46,8 @@ export class Chess extends ex.Scene {
 
         this.add(this.exMeter)
         this.add(this.enemyExMeter)
+        this.add(this.checkAnimation)
+        this.add(this.checkmateAnimation)
 
         socket.on('ex-press-server', (isOn: string, whichPlayer: string) => {
             if(whichPlayer != player) {
@@ -105,6 +111,14 @@ export class Chess extends ex.Scene {
                 king.move(invert(queenPosition.col), invert(queenPosition.row))
                 queen.move(invert(kingPosition.col), invert(kingPosition.row))
             }
+        })
+
+        socket.on('king-state-animation', (whichPlayer: string, checkmate: boolean) => {
+            console.log('entrou')
+            if(checkmate)
+                this.checkmateAnimation.animate()
+            else
+                this.checkAnimation.animate()
         })
     }
 

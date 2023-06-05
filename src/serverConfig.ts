@@ -127,5 +127,6 @@ function kingState () {
         } else {
             kingCheckmate(blackKing!, 'Black')
         }
+        socket.emit('king-state', roomId, player, isCheckmate)
     }
 }
