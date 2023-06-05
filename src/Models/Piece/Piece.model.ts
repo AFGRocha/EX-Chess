@@ -93,9 +93,7 @@ export class Piece extends ex.Actor {
     }
 
     move(x: number, y: number, moveOptions = {isFromServer: false, isServerEx: false } ){
-        //@ts-ignore-line
-        // window.Alpine.store('history').addHistory(`${this.name} to ${this.getMoveHistory(x,y)}`)
-        const $newItem = $('<p>').text(`${this.name} to ${this.getMoveHistory(x,y)}`);
+        const $newItem = $('<p>').text(`${this.pieceColor}: ${this.getMoveHistory(this.currentPosition.col,this.currentPosition.row)} to ${this.getMoveHistory(x,y)}`);
         $gameHistory.append($newItem);
         
         const oldPosition = this.currentPosition
