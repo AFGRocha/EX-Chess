@@ -2,7 +2,7 @@ import * as ex from 'excalibur';
 import { DisplayMode } from 'excalibur';
 import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
-import { connectToRoom } from './serverConfig';
+import { connectToRoom, fullRoom, socket, waitForEvent } from './serverConfig';
 import $ from "jquery";
 
 
@@ -34,35 +34,55 @@ export const chess = new Chess();
 export const game = new Game();
 let roomId = ''
 
-function startGame () {
-  $("#create").on("click",function(e) {
-    e.preventDefault();
-    $("#info-container").show()
-    $("#create-game").hide()
-    roomId = (Math.random() + 1).toString(36).substring(7);
-    $('#roomId').text("Room Id: " + roomId);
-    connectToRoom(roomId, 'player1')
-
+function showGame () {
     chess.renderView()
     //game.toggleDebug()
     game.initialize();
     game.add('chess', chess)
     game.goToScene('chess')
+}
+
+function showRoomInfo () {
+  $("#info-container").show()
+  $("#create-game").hide()
+  $('#roomId').text("Room Id: " + roomId);
+}
+
+function startGame () {
+  $("#create").on("click",function(e) {
+    e.preventDefault();
+    roomId = (Math.random() + 1).toString(36).substring(7);
+    connectToRoom(roomId, 'player1')
+    showRoomInfo()
+    $("#waiting").show()
+    Promise.race([
+      waitForEvent(socket, 'player2-ready')
+    ]).then((result) => {
+        showGame()
+        $("#waiting").hide()
+    })
   });
 
   $("#join").on("click",function(e) {
     e.preventDefault();
-    $('#roomId').text("Room Id: " + $("#room-code").val());
-    $("#info-container").show()
-    $("#create-game").hide()
     roomId = $("#room-code").val() as string
     connectToRoom(roomId, 'player2')
-
-    chess.renderView()
-    //game.toggleDebug()
-    game.initialize();
-    game.add('chess', chess)
-    game.goToScene('chess')
+    Promise.race([
+      waitForEvent(socket, 'connected'),
+      waitForEvent(socket, 'full-room')
+    ])
+      .then((result) => {
+        if(fullRoom)
+          console.log(fullRoom)
+        else {
+          showRoomInfo()
+          showGame()
+        }
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
   });
   
   $("#history-button").on("click",function(e) { 

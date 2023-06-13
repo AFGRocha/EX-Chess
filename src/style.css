@@ -45,6 +45,10 @@ body {
   height: 83vh;
 }
 
+#waiting {
+  display: none;
+}
+
 .piece-ex {
  padding: 25px;
 }

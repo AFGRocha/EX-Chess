@@ -5,6 +5,7 @@ export let userId = ''
 export let player = ''
 export let turn = 1
 export let playerColor = ''
+export let fullRoom = false
 import $ from "jquery";
 import { King } from './Models/Piece/King/King.model';
 
@@ -31,8 +32,21 @@ export function invert (num: number) {
 socket.on('connected', (room: string, user: string) => {
     roomId = room
     userId = user
+    fullRoom = false
 })
 
+socket.on('player2-ready', () => {})
+
+socket.on('full-room', () => {
+    fullRoom = true
+    console.log('room is full')
+})
+
+export const waitForEvent = (socket: any, event: any) => {
+    return new Promise((resolve, reject) => {
+      socket.once(event, resolve);
+    });
+};
 
 socket.on('piece-movement-server', (oldPosition: any, newPosition: any, whichPlayer: string, isEx: string) => {
     if(whichPlayer !== player) {
