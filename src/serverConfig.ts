@@ -39,7 +39,6 @@ socket.on('player2-ready', () => {})
 
 socket.on('full-room', () => {
     fullRoom = true
-    console.log('room is full')
 })
 
 export const waitForEvent = (socket: any, event: any) => {

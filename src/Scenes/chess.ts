@@ -115,7 +115,6 @@ export class Chess extends ex.Scene {
         })
 
         socket.on('king-state-animation', (whichPlayer: string, checkmate: boolean) => {
-            console.log(whichPlayer)
             if(checkmate) {
                 this.checkmateAnimation.animateCheckmate()
                 endGame()
@@ -130,7 +129,6 @@ export class Chess extends ex.Scene {
                     text.text = 'You Win'
                 }
 
-                console.log(text)
                 const actor = new ex.Actor({
                     pos: ex.vec(400, 500)
                 });

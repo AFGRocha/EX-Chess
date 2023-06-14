@@ -154,7 +154,7 @@ export class King extends smallDistancePiece {
             if(!king.check(possibleEnemyMoves))
                 return false
         }
-        console.log('checkmate')
+
         return true
     }
 }
