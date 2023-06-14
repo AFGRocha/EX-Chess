@@ -101,11 +101,11 @@ export class Piece extends ex.Actor {
         const isEx = this.chess!.exMeter.isOn
         piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
         piecesInPlay[x][y] = this
-
+        this.currentPosition = {col: x, row: y}
+        
         function finishMove(piece: Piece) {
             piece.pos = new ex.Vector(piece.grid[x][y].x + 50, piece.grid[x][y].y + 50)
 
-            piece.currentPosition = {col: x, row: y}
             for (var moves in piece.availableTiles) {
                 piece.removeChild(piece.availableTiles[moves])
             }
@@ -135,8 +135,9 @@ export class Piece extends ex.Actor {
             kingCheck(myKing.king!, myKing.enemy)
 
             if(getIsCheck()) {
+                this.currentPosition = {col: oldPosition.col, row: oldPosition.row}
                 piecesInPlay[x][y] = null
-                piecesInPlay[this.currentPosition.col][this.currentPosition.row] = null
+                piecesInPlay[this.currentPosition.col][this.currentPosition.row] = this
             } else {
                 finishMove(this)
             }

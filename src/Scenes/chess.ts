@@ -12,7 +12,6 @@ import { endGame, invert, nextTurn, player, setKings, socket } from '../serverCo
 import { piecesInPlay } from '../State/Grid.state';
 import { KingStateAnimation } from '../Models/KingStateAnimation/KingStateAnimation.model';
 import $ from "jquery";
-import { chess } from '../main';
 
 
 export class Chess extends ex.Scene {

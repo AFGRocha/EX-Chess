@@ -16,6 +16,7 @@ export class KingStateAnimation extends ex.Actor {
         this.actions.moveTo(ex.vec(370, 400), 800)
         this.actions.moveTo(ex.vec(400, 400), 20)
         this.actions.moveTo(ex.vec(1100, 400), 800)
+        this.pos = ex.vec(-250, 400)
     }
 
     animateCheckmate() {
