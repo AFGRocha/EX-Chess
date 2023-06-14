@@ -144,3 +144,7 @@ function kingState () {
         socket.emit('king-state', roomId, player, isCheckmate)
     }
 }
+
+export function endGame() {
+    turn = 2
+}

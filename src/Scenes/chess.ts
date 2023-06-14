@@ -8,9 +8,11 @@ import { Pawn } from '../Models/Piece/Pawn/Pawn.model';
 import { Queen } from '../Models/Piece/Queen/Queen.model';
 import { Rook } from '../Models/Piece/Rook/Rook.model';
 import { Resources } from '../resources';
-import { invert, nextTurn, player, setKings, socket } from '../serverConfig';
+import { endGame, invert, nextTurn, player, setKings, socket } from '../serverConfig';
 import { piecesInPlay } from '../State/Grid.state';
 import { KingStateAnimation } from '../Models/KingStateAnimation/KingStateAnimation.model';
+import $ from "jquery";
+import { chess } from '../main';
 
 
 export class Chess extends ex.Scene {
@@ -114,11 +116,39 @@ export class Chess extends ex.Scene {
         })
 
         socket.on('king-state-animation', (whichPlayer: string, checkmate: boolean) => {
-            console.log('entrou')
-            if(checkmate)
-                this.checkmateAnimation.animate()
+            console.log(whichPlayer)
+            if(checkmate) {
+                this.checkmateAnimation.animateCheckmate()
+                endGame()
+                var text = new ex.Text({
+                    text: '',
+                    font: new ex.Font({ family: 'impact', size: 40, shadow: {color: ex.Color.Black, offset: ex.vec(1,1)} }),
+                    color: ex.Color.fromHex('#FFFFFF')
+                })
+                if(whichPlayer === player) {
+                    text.text = 'You Lose'
+                } else {
+                    text.text = 'You Win'
+                }
+
+                console.log(text)
+                const actor = new ex.Actor({
+                    pos: ex.vec(400, 500)
+                });
+                actor.graphics.use(text);
+                this.add(actor)
+            }
             else
-                this.checkAnimation.animate()
+                this.checkAnimation.animateCheck()
+        })
+
+        socket.on('player-disconnected', () => {
+            $('#myModal').show(); // Open the modal
+
+            $("#close-modal").on("click",function(e) { 
+                e.preventDefault();
+                location.reload()
+              });
         })
     }
 

@@ -12,9 +12,14 @@ export class KingStateAnimation extends ex.Actor {
         this.graphics.add(this.sprite);
     }
 
-    animate() {
+    animateCheck() {
         this.actions.moveTo(ex.vec(370, 400), 800)
         this.actions.moveTo(ex.vec(400, 400), 20)
         this.actions.moveTo(ex.vec(1100, 400), 800)
+    }
+
+    animateCheckmate() {
+        this.actions.moveTo(ex.vec(370, 400), 800)
+        this.actions.moveTo(ex.vec(400, 400), 20)
     }
 }
