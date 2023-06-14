@@ -83,5 +83,21 @@ body {
 
 
 #create-game { 
-  
+  display: flex;
+  justify-content: center;
+}
+
+.create-box {
+  position: absolute;
+  width: 400px;
+  background: #222;  
+  z-index: 1000;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 15px 35px rgba(0,0,0,9);
+}
+
+#room-full { 
+  color: red;
+  display: none;
 }

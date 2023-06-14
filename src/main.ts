@@ -73,7 +73,7 @@ function startGame () {
     ])
       .then((result) => {
         if(fullRoom)
-          console.log(fullRoom)
+        $("#room-full").show()
         else {
           showRoomInfo()
           showGame()
