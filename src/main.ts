@@ -21,12 +21,14 @@ class Game extends ex.Engine {
 
   // Build and load resources
   var loader = new ex.Loader();
+  loader.backgroundColor = "#312E2B"
+  loader.logo = "/src/images/logo.png"
   loader.suppressPlayButton = true;
   (Object.keys(Resources) as (keyof typeof Resources)[]).forEach((key) => {
     loader.addResource(Resources[key]);
   });
   this.start(loader);
-      
+  
   }
 }
   
