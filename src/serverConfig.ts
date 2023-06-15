@@ -10,7 +10,7 @@ import $ from "jquery";
 import { King } from './Models/Piece/King/King.model';
 
 //@ts-ignore
-export const socket = io.connect('http://localhost:8080')
+export const socket = io.connect('https://ex-chess-server.glitch.me')
 
 export async function connectToRoom(roomId: string, givenPlayer: string) {
     socket.emit('join-room', roomId, 10)
