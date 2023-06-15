@@ -51,8 +51,6 @@ function showRoomInfo () {
 function startGame () {
   $("#create").on("click",function(e) {
     e.preventDefault();
-    const audioContext = new AudioContext()
-    audioContext.resume()
 
     roomId = (Math.random() + 1).toString(36).substring(7);
     connectToRoom(roomId, 'player1')
@@ -68,9 +66,6 @@ function startGame () {
 
   $("#join").on("click",function(e) {
     e.preventDefault();
-    const audioContext = new AudioContext()
-    audioContext.resume()
-    
     roomId = $("#room-code").val() as string
     connectToRoom(roomId, 'player2')
     Promise.race([
