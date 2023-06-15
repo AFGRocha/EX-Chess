@@ -139,6 +139,7 @@ export class King extends smallDistancePiece {
 
             const enemyColor = this.pieceColor === 'White' ? 'Black' : 'White';
             const enemyPieces = tempBoard.flatMap((innerArray) => 
+                //@ts-ignore
                 innerArray.filter((piece) => {
                     if(piece != null)
                         return piece.pieceColor === enemyColor;

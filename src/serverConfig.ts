@@ -42,7 +42,7 @@ socket.on('full-room', () => {
 })
 
 export const waitForEvent = (socket: any, event: any) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       socket.once(event, resolve);
     });
 };
@@ -91,6 +91,7 @@ let isCheckmate = false;
 
 export function kingCheck(king: King, enemyColor: string) {
     const enemyPieces = piecesInPlay.flatMap((innerArray) => 
+        //@ts-ignore
         innerArray.filter((piece) => {
             if(piece != null)
                 return piece.pieceColor === enemyColor;
@@ -108,6 +109,7 @@ export function kingCheck(king: King, enemyColor: string) {
 
 function kingCheckmate(king: King, myColor: string) {
     const myPieces = piecesInPlay.flatMap((innerArray) => 
+        //@ts-ignore
         innerArray.filter((piece) => {
             if(piece != null)
                 return piece.pieceColor === myColor;
