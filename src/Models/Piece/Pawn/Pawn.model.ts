@@ -16,7 +16,7 @@ export class Pawn extends smallDistancePiece {
     enPassantPieces: Piece[] = []
 
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
-        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Pawn${tilePosition.col}`, chess);
+        super(asset,tilePosition,grid, pieceColor, 'Pawn', chess);
         this.exAmount = 100;
     }
 

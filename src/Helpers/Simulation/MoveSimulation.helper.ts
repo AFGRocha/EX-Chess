@@ -32,7 +32,7 @@ export function simulateMove(board: any[][], move: any) {
     for (var pieces in board) {
         for(var piece in board[pieces]) {
             if(board[pieces][piece]) {
-                const className = board[pieces][piece].constructor.name
+                const className = board[pieces][piece].name
                 const newPiece = createObject(className, board[pieces][piece])
                 tempBoard[pieces][piece] = newPiece
             }

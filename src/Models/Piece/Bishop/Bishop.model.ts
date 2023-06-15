@@ -19,7 +19,7 @@ export class Bishop extends LongDistancePiece {
         {x: 1, y: 1} // DownRight
     ]
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
-        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Bishop${tilePosition.col}`, chess);
+        super(asset,tilePosition,grid, pieceColor, 'Bishop', chess);
         this.exAmount = 200
     }
 

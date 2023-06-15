@@ -43,9 +43,6 @@ let Resources = {
   BlackBishop: new ImageSource(blackBishop),
   BlackQueen: new ImageSource(blackQueen),
   BlackKing: new ImageSource(blackKing),
-  MoveSound: new Sound(moveSound),
-  KillSound: new Sound(killSound),
-  ExSound: new Sound(exSound),
   Meter: new ImageSource(meter),
   MeterOn: new ImageSource(meterOn),
   Background: new ImageSource(background),
@@ -53,4 +50,10 @@ let Resources = {
   Checkmate: new ImageSource(checkmate)
 };
 
-export { Resources };
+let Audio = {
+  MoveSound: new Sound(moveSound),
+  KillSound: new Sound(killSound),
+  ExSound: new Sound(exSound),
+}
+
+export { Resources, Audio };

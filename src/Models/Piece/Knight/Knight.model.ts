@@ -20,7 +20,7 @@ export class Knight extends smallDistancePiece {
         {x: 1, y: 2} // DownRight
     ]
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
-        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Knigh${tilePosition.col}`, chess);
+        super(asset,tilePosition,grid, pieceColor, 'Knight', chess);
         this.exAmount = 200
     }
 

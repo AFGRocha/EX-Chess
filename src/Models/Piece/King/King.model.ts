@@ -27,7 +27,7 @@ export class King extends smallDistancePiece {
     ]
     
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
-        super(asset,tilePosition,grid, pieceColor, `${pieceColor}King${tilePosition.col}`, chess);
+        super(asset,tilePosition,grid, pieceColor, 'King', chess);
         this.exAmount = 300
     }
 

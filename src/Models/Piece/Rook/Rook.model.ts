@@ -17,7 +17,7 @@ export class Rook extends LongDistancePiece {
         {x: -1, y: 0} // Left
     ]
     constructor(asset: ex.ImageSource, tilePosition: PiecePosition, grid: TilePosition[][], pieceColor: string, chess: Chess ) { 
-        super(asset,tilePosition,grid, pieceColor, `${pieceColor}Rook${tilePosition.col}`, chess);
+        super(asset,tilePosition,grid, pieceColor, 'Rook', chess);
         this.exAmount = 100
     }
 
