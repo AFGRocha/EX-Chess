@@ -1,5 +1,3 @@
-import { Piece } from "../Models/Piece/Piece.model";
-
 export type Class = new (...args: any[]) => any;
 
 export function longDistanceMixin<Base extends Class>(base: Base) {

@@ -1,5 +1,3 @@
-import { Piece } from "../Models/Piece/Piece.model"
-
 const piecesInPlay: any[][] = []
 for (let i = 0; i < 8; i++) {
     piecesInPlay.push([])

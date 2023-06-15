@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import { Resource } from 'excalibur';
 import { longDistanceMixin } from '../../../Mixins/LongMovementPiece.mixin';
 import { Resources } from '../../../resources';
 import { Chess } from '../../../Scenes/chess';

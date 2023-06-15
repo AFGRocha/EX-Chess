@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import { DisplayMode } from 'excalibur';
 import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
 import { connectToRoom, fullRoom, socket, waitForEvent } from './serverConfig';
@@ -59,7 +58,7 @@ function startGame () {
     $("#waiting").show()
     Promise.race([
       waitForEvent(socket, 'player2-ready')
-    ]).then((result) => {
+    ]).then(() => {
         showGame()
         $("#waiting").hide()
     })
@@ -73,7 +72,7 @@ function startGame () {
       waitForEvent(socket, 'connected'),
       waitForEvent(socket, 'full-room')
     ])
-      .then((result) => {
+      .then(() => {
         if(fullRoom)
         $("#room-full").show()
         else {
