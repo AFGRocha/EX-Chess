@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { Audio } from '../../resources';
+import { Resources } from '../../resources';
 import { Chess } from '../../Scenes/chess';
 import { getIsCheck, getKing, kingCheck, nextTurn, player, playerColor, roomId, socket, turn } from '../../serverConfig';
 import { piecesInPlay } from '../../State/Grid.state';
@@ -76,7 +76,7 @@ export class Piece extends ex.Actor {
         }
         this.chess!.exMeter.addMeter(50)
       
-        Audio.KillSound.play()
+        Resources.KillSound.play()
     }
 
     cleanAvailableTiles () {
@@ -123,7 +123,7 @@ export class Piece extends ex.Actor {
                 }
             }
     
-            Audio.MoveSound.play()
+            Resources.MoveSound.play()
             
             if(!moveOptions.isFromServer) {
                 socket.emit('piece-movement', oldPosition, newPosition, roomId, player, isEx.toString())
@@ -192,7 +192,7 @@ export class Piece extends ex.Actor {
         this.chess!.exMeter.bar.width = this.chess!.exMeter.bar.width - this.exAmount
         this.chess!.exMeter.isOn = false
         this.chess!.exMeter.changeColor()
-        Audio.ExSound.play()
+        Resources.ExSound.play()
         socket.emit('ex-spend-meter', roomId, player, this.exAmount)
         nextTurn(player)
     }

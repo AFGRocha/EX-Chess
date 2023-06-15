@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { Resources, Audio } from "./resources";
+import { Resources } from "./resources";
 import { Chess } from './Scenes/chess';
 import { connectToRoom, fullRoom, socket, waitForEvent } from './serverConfig';
 import $ from "jquery";
@@ -18,21 +18,17 @@ class Game extends ex.Engine {
   }
   initialize() {
 
-  // Build and load resources
-  var loader = new ex.Loader();
-  loader.backgroundColor = "#312E2B"
-  loader.logo = "/src/images/logo.png"
-  loader.suppressPlayButton = true;
-  (Object.keys(Resources) as (keyof typeof Resources)[]).forEach((key) => {
-    Resources[key].load()
-    loader.addResource(Resources[key]);
-  });
-
-  (Object.keys(Audio) as (keyof typeof Audio)[]).forEach((key) => {
-    loader.addResource(Audio[key]);
-  });
-  this.start(loader);
-  
+    // Build and load resources
+    var loader = new ex.Loader();
+    loader.backgroundColor = "#312E2B"
+    loader.logo = "/src/images/logo.png"
+    loader.suppressPlayButton = true;
+    (Object.keys(Resources) as (keyof typeof Resources)[]).forEach((key) => {
+      Resources[key].load()
+      loader.addResource(Resources[key]);
+    });
+    const audioContext = new AudioContext()
+    audioContext.resume()
   }
 }
   
