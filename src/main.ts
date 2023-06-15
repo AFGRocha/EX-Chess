@@ -24,6 +24,7 @@ class Game extends ex.Engine {
   loader.logo = "/src/images/logo.png"
   loader.suppressPlayButton = true;
   (Object.keys(Resources) as (keyof typeof Resources)[]).forEach((key) => {
+    Resources[key].load()
     loader.addResource(Resources[key]);
   });
   this.start(loader);
