@@ -17,7 +17,6 @@ class Game extends ex.Engine {
     });
   }
   initialize() {
-
     // Build and load resources
     var loader = new ex.Loader();
     loader.backgroundColor = "#312E2B"
@@ -27,8 +26,7 @@ class Game extends ex.Engine {
       Resources[key].load()
       loader.addResource(Resources[key]);
     });
-    const audioContext = new AudioContext()
-    audioContext.resume()
+    
   }
 }
   
@@ -104,4 +102,7 @@ function startGame () {
   });
 }
 
+
+const audioContext = new AudioContext()
+audioContext.resume()
 startGame()
