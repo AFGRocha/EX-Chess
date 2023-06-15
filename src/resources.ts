@@ -47,10 +47,13 @@ let Resources = {
   MeterOn: new ImageSource(meterOn),
   Background: new ImageSource(background),
   Check: new ImageSource(check),
-  Checkmate: new ImageSource(checkmate),
+  Checkmate: new ImageSource(checkmate)
+};
+
+let Audio = {
   MoveSound: new Sound(moveSound),
   KillSound: new Sound(killSound),
   ExSound: new Sound(exSound),
-};
+}
 
-export { Resources };
+export { Resources, Audio };
